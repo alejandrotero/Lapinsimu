@@ -51,22 +51,19 @@ public class GraphCharacteristics {
 
 	public static void main(String[] args) {
 		GraphCharacteristics chara = new GraphCharacteristics();
-		//chara.readFile("C:/Users/ASUS/Documents/Lapin/src/graphCharacteristics/g1Adre.txt");
-		chara.readFile("C:/Users/ASUS/Documents/Lapin/src/graphCharacteristics/groupe 1.txt");
+		//chara.readFile("data/g1Adre.txt");
+		chara.readFile("data/groupe 1.txt");
 		List<Double> unrepeatedTimes = eliminateRepeated(pressionArterielleMoyenne);
-		getVariations(unrepeatedTimes, pressionArterielleMoyenne, 10, 0.2);
+		List<EventInTheTrace> eventsInTheTrace = getVariations(unrepeatedTimes, pressionArterielleMoyenne, 10, 0.15);
+		for (EventInTheTrace eventInTheTrace : eventsInTheTrace) {
+			System.out.println(eventInTheTrace.toString());
+			System.out.println();
+		}
 	}
-	private static String getStringTime(double timeInSeconds) {
-		String result = timeInSeconds + " seconds ( ";
-		int minutes = (int)(timeInSeconds/60);
-		int secondes = (int) (timeInSeconds - (minutes*60));
-		result += minutes +":"+secondes + " minutes)";
-		return result;
-	}
-	private static void getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
-		List<Double> timesWithChanges = new ArrayList<>();
+	
+	private static List<EventInTheTrace> getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
+		List<EventInTheTrace> eventsInTheTrace = new ArrayList<>();
 		//Special case for initialization
-		timesWithChanges.add(-100.0);
 		List<Double> valuesForAverage = new ArrayList<>();
 		double average=0;
 		//Initialization moyenne
@@ -76,8 +73,7 @@ public class GraphCharacteristics {
 		}
 		average/=parameterKMoyenne;
 		//Check all the points
-		boolean peak = false;
-		boolean valley = false;
+		EventInTheTrace newEvent = null;
 		double extremeValue = 0;
 		double timeOfExtreme = 0;
 		double averageBeforeExtreme = 0;
@@ -85,41 +81,33 @@ public class GraphCharacteristics {
 		
 		for (int i = 0; i < listTimes.size(); i++) {
 			double actualValue =listValues.get(i);
-			double variation = actualValue - average ;  
+			double variation = actualValue - average;  
 			if (Math.abs(variation)>average*porcentageToChange) {
-				//At least there must be n seconds between two changements
-				int n = 2;
-				if (listTimes.get(i)-timesWithChanges.get(timesWithChanges.size()-1)>n) {
-					timesWithChanges.add(listTimes.get(i));
-					//Prints the value of the extreme value if the peak or valley ended
-					//System.out.println("1");
-					//ended(peak,valley,extremeValue,timeOfExtreme);
+				
+				if (checkProximity(eventsInTheTrace,listTimes.get(i))) {
+					if (newEvent!=null) {
+						System.out.println("WARNING! at the time "+listTimes.get(i)+" one event started before another event ended.");
+					}
 					if (variation<0) {
-						valley= true;
-						peak=false;
 						extremeValue=Double.MAX_VALUE;
 						averageBeforeExtreme=average;
-						System.out.println("Negative changement in the time "+getStringTime(listTimes.get(i)));
+						newEvent = new EventInTheTrace(eventsInTheTrace.size());
+						newEvent.setPeak(false);
+						newEvent.setStartingTime(listTimes.get(i), actualValue);
+						eventsInTheTrace.add(newEvent);
+						//System.out.println("Negative changement in the time "+getStringTime(listTimes.get(i)));
 					} else {
-						peak = true;
-						valley=false;
 						extremeValue=Double.MIN_VALUE;
 						averageBeforeExtreme=average;
-						System.out.println("Positive changement in the time "+getStringTime(listTimes.get(i)));
+						newEvent = new EventInTheTrace(eventsInTheTrace.size());
+						newEvent.setPeak(true);
+						newEvent.setStartingTime(listTimes.get(i), actualValue);
+						eventsInTheTrace.add(newEvent);
+						//System.out.println("Positive changement in the time "+getStringTime(listTimes.get(i)));
 					}
 					//average = (actualValue+average)/2;
 				}
 				
-			}
-			//Looks for the top of the peak or the bottom of the valley
-			if (valley && actualValue<extremeValue) {
-				extremeValue=actualValue;
-				timeOfExtreme=listTimes.get(i);
-				//System.out.println("minupdated"+peak+valley);
-			} else if (peak && actualValue>extremeValue) {
-				extremeValue=actualValue;
-				timeOfExtreme=listTimes.get(i);
-				//System.out.println("maxupdated"+peak+valley);
 			}
 			
 			//Update of the average
@@ -128,28 +116,50 @@ public class GraphCharacteristics {
 			average += actualValue/parameterKMoyenne;
 			valuesForAverage.add(actualValue);
 			
-			//Check if the average returned to normal value
-			if (valley||peak) {
+			//Looks for the top of the peak or the bottom of the valley
+			if (newEvent!=null) {
+				if (!newEvent.isPeak() && actualValue<extremeValue) {
+					extremeValue=actualValue;
+					timeOfExtreme=listTimes.get(i);
+					//System.out.println("minupdated"+peak+valley);
+				} else if (newEvent.isPeak() && actualValue>extremeValue) {
+					extremeValue=actualValue;
+					timeOfExtreme=listTimes.get(i);
+					//System.out.println("maxupdated"+peak+valley);
+				}
+				
+				//Check if the average returned to normal value
 				if (Math.abs(averageBeforeExtreme-average)<(averageBeforeExtreme*porcentageToChange*0.1)) {
-					//System.out.println("2");
-					ended(peak,valley,extremeValue,timeOfExtreme);
-					System.out.println("Returned to normal comportament in the time "+getStringTime(listTimes.get(i))+"average before: "+averageBeforeExtreme+", average after: "+average);
+					//System.out.println("Maximun value: "+extremeValue+" at "+getStringTime(timeOfExtreme));
+					newEvent.setTimeOfExtremePoint(timeOfExtreme, extremeValue);
+					//System.out.println("Returned to normal comportament in the time "+getStringTime(listTimes.get(i))+"average before: "+averageBeforeExtreme+", average after: "+average);
+					newEvent.setEndingTime(listTimes.get(i), actualValue);
 					averageBeforeExtreme=0;
+					newEvent=null;
 				}
 			}
+			
+			
+			
 		}
+		return eventsInTheTrace;
 	}
-	private static void ended(boolean peak, boolean valley, double extremeValue, double timeOfExtreme) {
-		if (valley) {
-			System.out.println("Minimun value: "+extremeValue+" at "+ getStringTime(timeOfExtreme));
-			valley=false;
-			peak=false;
-		}else if (peak) {
-			System.out.println("Maximun value: "+extremeValue+" at "+getStringTime(timeOfExtreme));
-			peak=false;
-			valley=false;
-		}
-		
+	/**
+	 * 
+	 * @param eventsInTheTrace
+	 * @param checkingTime
+	 * @return true if the last event in the trace is at least n seconds away from the last event
+	 */
+	private static boolean checkProximity(List<EventInTheTrace> eventsInTheTrace, Double checkingTime) {
+		boolean result = true;
+		if (!eventsInTheTrace.isEmpty()) {
+			//At least there must be n seconds between two changements
+			int n = 2;
+			if (checkingTime-eventsInTheTrace.get(eventsInTheTrace.size()-1).getStartingTime()<n) {
+				result = false;
+			} 
+		} 
+		return result;
 	}
 
 	private static List<Double> eliminateRepeated(List<Double> listAELiminerDOublons) {
