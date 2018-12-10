@@ -12,7 +12,7 @@ public class CoupageSequences {
 		try {
 
 			//br = new BufferedReader(new FileReader(FILENAME));
-			String nomFichier = "Data Ana/groupe 4 - Ascensio";
+			String nomFichier = "Data Ana/Robert groupe 7";
 			fr = new FileReader(nomFichier+ ".txt");
 			File file = new File(nomFichier);
 			
