@@ -37,8 +37,10 @@ public class GraphCharacteristics {
 				pressionArterielleMoyenne.add(Double.parseDouble(columnDetail[3]));
 			}
 			buff.close(); 
+			System.out.println("data readed correctly, "+time.size() + " data points");
 			}		
 			catch (Exception e){
+				System.out.println("error reading the file!");
 			}
 	}
 	
@@ -52,13 +54,15 @@ public class GraphCharacteristics {
 	public static void main(String[] args) {
 		GraphCharacteristics chara = new GraphCharacteristics();
 		//chara.readFile("data/g1Adre.txt");
+		//chara.readFile("data/sequence4.txt");
 		chara.readFile("data/groupe 1.txt");
 		List<Double> unrepeatedTimes = eliminateRepeated(pressionArterielleMoyenne);
-		List<EventInTheTrace> eventsInTheTrace = getVariations(unrepeatedTimes, pressionArterielleMoyenne, 10, 0.15);
+		List<EventInTheTrace> eventsInTheTrace = getVariations(unrepeatedTimes, pressionArterielleMoyenne, 10, 0.2);
 		for (EventInTheTrace eventInTheTrace : eventsInTheTrace) {
 			System.out.println(eventInTheTrace.toString());
 			System.out.println();
 		}
+		
 	}
 	
 	private static List<EventInTheTrace> getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
