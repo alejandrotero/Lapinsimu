@@ -8,12 +8,17 @@ public class CoupageSequences {
 		FileReader fr = null;
 		FileWriter fw = null;
 		int i=2;
-
+		
 		try {
 
 			//br = new BufferedReader(new FileReader(FILENAME));
-			fr = new FileReader("groupe 1.txt");
-			File f = new File ("sequence.txt");
+			String nomFichier = "Data Ana/groupe 4 - Ascensio";
+			fr = new FileReader(nomFichier+ ".txt");
+			File file = new File(nomFichier);
+			
+			file.mkdirs();
+			
+			File f = new File (nomFichier+"/sequence.txt");
 			
 			fw = new FileWriter (f);
 			
@@ -28,7 +33,7 @@ public class CoupageSequences {
 					
 					fw.close();
 					
-					f = new File ("sequence"+i+".txt");
+					f = new File (nomFichier+"/sequence"+i+".txt");
 					fw = new FileWriter (f);
 					fw.write (sCurrentLine+"\r\n");
 					i++;
