@@ -1,17 +1,10 @@
 package graphCharacteristics;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GraphCharacteristics {
-	public static List<Double> time;
-	public List<Double> pressionArterielle;
-	public List<Double> pressionRespiratiore;
-	public static List<Double> pressionArterielleMoyenne;
+	public Data data;
 	
 	public double getMoyenne(List<Double> points) {
 	 double result=0;
@@ -21,43 +14,19 @@ public class GraphCharacteristics {
 	 return result/points.size();
 	}
 	
-	public void readFile(String filePath) {
-		try{
-			InputStream flux=new FileInputStream(filePath); 
-			InputStreamReader lecture=new InputStreamReader(flux);
-			BufferedReader buff=new BufferedReader(lecture);
-			String ligne;
-			while ((ligne=buff.readLine())!=null){
-				String[] columnDetail = new String[6];
-				ligne = ligne.replace(',','.');
-				columnDetail = ligne.split("\\t");
-				time.add(Double.parseDouble(columnDetail[0]));
-				pressionArterielle.add(Double.parseDouble(columnDetail[1]));
-				pressionRespiratiore.add(Double.parseDouble(columnDetail[2]));
-				pressionArterielleMoyenne.add(Double.parseDouble(columnDetail[3]));
-			}
-			buff.close(); 
-			System.out.println("data readed correctly, "+time.size() + " data points");
-			}		
-			catch (Exception e){
-				System.out.println("error reading the file!");
-			}
-	}
-	
-	public GraphCharacteristics() {
-		time= new ArrayList<>();
-		pressionArterielle = new ArrayList<>();
-		pressionRespiratiore = new ArrayList<>();
-		pressionArterielleMoyenne = new ArrayList<>();
+
+
+	public GraphCharacteristics(Data data) {
+		this.data = data;
 	}
 
+
+
 	public static void main(String[] args) {
-		GraphCharacteristics chara = new GraphCharacteristics();
-		//chara.readFile("data/g1Adre.txt");
-		//chara.readFile("data/sequence4.txt");
-		chara.readFile("data/groupe 1.txt");
-		List<Double> unrepeatedTimes = eliminateRepeated(pressionArterielleMoyenne);
-		List<EventInTheTrace> eventsInTheTrace = getVariations(unrepeatedTimes, pressionArterielleMoyenne, 10, 0.2);
+		Data data = new Data("data/groupe 1.txt");
+		data.eliminateRepeatedPAMoyenne();
+		GraphCharacteristics chara = new GraphCharacteristics(data);
+		List<EventInTheTrace> eventsInTheTrace = chara.getVariations(data.getUniqueTimes(), data.getPressionArterielleMoyenne(), 10, 0.2);
 		for (EventInTheTrace eventInTheTrace : eventsInTheTrace) {
 			System.out.println(eventInTheTrace.toString());
 			System.out.println();
@@ -65,7 +34,7 @@ public class GraphCharacteristics {
 		
 	}
 	
-	private static List<EventInTheTrace> getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
+	private List<EventInTheTrace> getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
 		List<EventInTheTrace> eventsInTheTrace = new ArrayList<>();
 		//Special case for initialization
 		List<Double> valuesForAverage = new ArrayList<>();
@@ -91,25 +60,25 @@ public class GraphCharacteristics {
 				if (checkProximity(eventsInTheTrace,listTimes.get(i))) {
 					if (newEvent!=null) {
 						System.out.println("WARNING! at the time "+listTimes.get(i)+" one event started before another event ended.");
-					}
-					if (variation<0) {
-						extremeValue=Double.MAX_VALUE;
+					}else {
+						double timeOfVariation = listTimes.get(i-((int)parameterKMoyenne/2));
+						double valueInTheTimeOfVariation =valuesForAverage.get((int)parameterKMoyenne/2);
 						averageBeforeExtreme=average;
 						newEvent = new EventInTheTrace(eventsInTheTrace.size());
-						newEvent.setPeak(false);
-						newEvent.setStartingTime(listTimes.get(i), actualValue);
+						newEvent.setStartingTime(timeOfVariation, valueInTheTimeOfVariation);
 						eventsInTheTrace.add(newEvent);
-						//System.out.println("Negative changement in the time "+getStringTime(listTimes.get(i)));
-					} else {
-						extremeValue=Double.MIN_VALUE;
-						averageBeforeExtreme=average;
-						newEvent = new EventInTheTrace(eventsInTheTrace.size());
-						newEvent.setPeak(true);
-						newEvent.setStartingTime(listTimes.get(i), actualValue);
-						eventsInTheTrace.add(newEvent);
-						//System.out.println("Positive changement in the time "+getStringTime(listTimes.get(i)));
+						if (variation<0) {
+							extremeValue=Double.MAX_VALUE;
+							newEvent.setPeak(false);
+							//System.out.println("Negative changement in the time "+getStringTime(listTimes.get(i)));
+						} else {
+							extremeValue=Double.MIN_VALUE;
+							newEvent.setPeak(true);
+							//System.out.println("Positive changement in the time "+getStringTime(listTimes.get(i)));
+						}
 					}
-					//average = (actualValue+average)/2;
+					
+					
 				}
 				
 			}
@@ -154,7 +123,7 @@ public class GraphCharacteristics {
 	 * @param checkingTime
 	 * @return true if the last event in the trace is at least n seconds away from the last event
 	 */
-	private static boolean checkProximity(List<EventInTheTrace> eventsInTheTrace, Double checkingTime) {
+	private boolean checkProximity(List<EventInTheTrace> eventsInTheTrace, Double checkingTime) {
 		boolean result = true;
 		if (!eventsInTheTrace.isEmpty()) {
 			//At least there must be n seconds between two changements
@@ -166,20 +135,6 @@ public class GraphCharacteristics {
 		return result;
 	}
 
-	private static List<Double> eliminateRepeated(List<Double> listAELiminerDOublons) {
-		List<Double> uniqueTimes = new ArrayList<>();
-		List<Double> uniqueValues = new ArrayList<>();
-		uniqueTimes.add(time.get(0));
-		uniqueValues.add(listAELiminerDOublons.get(0));
-		for (int i = 1; i < listAELiminerDOublons.size(); i++) {
-			if (listAELiminerDOublons.get(i-1).doubleValue()!=listAELiminerDOublons.get(i).doubleValue()) {
-				uniqueTimes.add(time.get(i));
-				uniqueValues.add(listAELiminerDOublons.get(i));
-			}
-		}
-		listAELiminerDOublons.clear();
-		listAELiminerDOublons.addAll(uniqueValues);
-		return uniqueTimes;
-	}
+	
 
 }
