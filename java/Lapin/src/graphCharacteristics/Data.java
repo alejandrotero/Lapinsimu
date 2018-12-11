@@ -47,10 +47,15 @@ public class Data {
 				String[] columnDetail = new String[6];
 				ligne = ligne.replace(',','.');
 				columnDetail = ligne.split("\\t");
-				time.add(Double.parseDouble(columnDetail[0]));
-				pressionArterielle.add(Double.parseDouble(columnDetail[1]));
-				pressionRespiratiore.add(Double.parseDouble(columnDetail[2]));
-				pressionArterielleMoyenne.add(Double.parseDouble(columnDetail[3]));
+				try {
+					time.add(Double.parseDouble(columnDetail[0]));
+					pressionArterielle.add(Double.parseDouble(columnDetail[1]));
+					pressionRespiratiore.add(Double.parseDouble(columnDetail[2]));
+					pressionArterielleMoyenne.add(Double.parseDouble(columnDetail[3]));
+				} catch (Exception e) {
+					System.out.println("line of the fichier txt ignored, not numeric");
+				}
+				
 			}
 			buff.close(); 
 			System.out.println("data readed correctly, "+time.size() + " data points");
