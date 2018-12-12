@@ -1,8 +1,6 @@
 package graphCharacteristics;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,6 +153,10 @@ public class GraphCharacteristics {
 						if (i==listTimes.size()-1) {
 							newEvent.setEndedBeforeDataFinished(false);
 							//System.out.println("The data finished before arriving to the normal value");
+						}
+						
+						if (!newEvent.isValide()) {
+							eventsInTheTrace.remove(eventsInTheTrace.size()-1);
 						}
 						newEvent=null;
 					}

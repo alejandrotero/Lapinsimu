@@ -88,5 +88,16 @@ public class EventInTheTrace {
 	public void setEndedBeforeDataFinished(boolean endedBeforeDataFinished) {
 		this.endedBeforeDataFinished = endedBeforeDataFinished;
 	}
+	/**
+	 *If the event started and ended in a small period of time (3 seconds) we assume that it's an error of the data collection
+	 * @return
+	 */
+	public boolean isValide() {
+		if (endingTime-startingTime<3) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 }

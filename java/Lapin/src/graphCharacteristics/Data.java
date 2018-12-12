@@ -63,7 +63,7 @@ public class Data {
 				
 			}
 			buff.close(); 
-			System.out.println("data readed correctly, "+time.size() + " data points");
+			System.out.println("data: "+nomFicher+" readed correctly, "+time.size() + " data points");
 			}		
 			catch (Exception e){
 				System.out.println("error reading the file!");
