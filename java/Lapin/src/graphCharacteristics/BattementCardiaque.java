@@ -19,28 +19,30 @@ public class BattementCardiaque {
 		this.valeursY =  data.getPressionArterielle().toArray();
 		for (int i=0; i<this.valeursX.length; i++) {
 			valeursY[i]=(double) valeursY[i]-48;
+
 		}
 		
 	}
 	
-	void creationFichier() {
+	void creationFichier1Battement() {
 			
-			System.out.println("ici");
 			File f = new File ("test.txt");
 			
 			 
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
-			    System.out.println("ici");
 			    System.out.println(this.valeursX.length);
 			 
 			    for (int i=0; i<this.valeursX.length; i++)
 			    {
 			    	String sX=(String.valueOf ((double) this.valeursX[i]));
 			    	String sY=(String.valueOf ((double) this.valeursY[i]));
-			    	fw.write (sX.substring(0,sX.indexOf(",")+3)+"\t");
-			    	fw.write (sY.substring(0,sY.indexOf(",")+3));
+			    	sX=sX.replace('.', ',');
+			    	sY=sY.replace('.', ',');
+			    	System.out.println(sX);
+			    	fw.write (sX+"\t");
+			    	fw.write (sY);
 			        fw.write ("\r\n");
 			        
 			    }
@@ -57,7 +59,7 @@ public class BattementCardiaque {
 			Data data= new Data("Data Ana/Pattern.txt");
 			BattementCardiaque pattern = new BattementCardiaque(data);
 			pattern.extractionPattern();
-			pattern.creationFichier();
+			pattern.creationFichier1Battement();
 			
 		}
 
