@@ -40,7 +40,6 @@ public class BattementCardiaque {
 			    	String sY=(String.valueOf ((double) this.valeursY[i]));
 			    	sX=sX.replace('.', ',');
 			    	sY=sY.replace('.', ',');
-			    	System.out.println(sX);
 			    	fw.write (sX+"\t");
 			    	fw.write (sY);
 			        fw.write ("\r\n");
