@@ -59,7 +59,7 @@ public class BattementCardiaque {
 			Data data= new Data("Data Ana/Pattern.txt");
 			BattementCardiaque pattern = new BattementCardiaque(data);
 			pattern.extractionPattern();
-			pattern.creationFichier();
+			pattern.creationFichier1Battement();
 			
 		}
 
