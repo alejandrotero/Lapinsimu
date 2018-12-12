@@ -118,7 +118,12 @@ public class traitement_donnee {
 
 		}
 	}
-		
+		/**
+		 * 
+		 * @param FilePath dossier
+		 * @param EndPath 
+		 * @throws IOException
+		 */
 		static void traitement_dossier(String FilePath, String EndPath) throws IOException {
 			File rep = new File(FilePath);
 			File[] fichiersTxt = rep.listFiles();
