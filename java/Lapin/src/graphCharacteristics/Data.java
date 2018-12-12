@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Data {
+	public String nomFicher;
+	public String getNomFicher() {
+		return nomFicher;
+	}
 	public List<Double> time;
 	public List<Double> pressionArterielle;
 	public List<Double> pressionRespiratiore;
@@ -42,6 +46,7 @@ public class Data {
 			InputStream flux=new FileInputStream(filePath); 
 			InputStreamReader lecture=new InputStreamReader(flux);
 			BufferedReader buff=new BufferedReader(lecture);
+			nomFicher = filePath;
 			String ligne;
 			while ((ligne=buff.readLine())!=null){
 				String[] columnDetail = new String[6];
@@ -53,12 +58,12 @@ public class Data {
 					pressionRespiratiore.add(Double.parseDouble(columnDetail[2]));
 					pressionArterielleMoyenne.add(Double.parseDouble(columnDetail[3]));
 				} catch (Exception e) {
-					System.out.println("line of the fichier txt ignored, not numeric");
+					//System.out.println("line of the fichier txt ignored, not numeric");
 				}
 				
 			}
 			buff.close(); 
-			System.out.println("data readed correctly, "+time.size() + " data points");
+			System.out.println("data: "+nomFicher+" readed correctly, "+time.size() + " data points");
 			}		
 			catch (Exception e){
 				System.out.println("error reading the file!");
