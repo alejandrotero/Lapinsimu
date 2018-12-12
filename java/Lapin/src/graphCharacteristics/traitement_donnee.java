@@ -138,6 +138,7 @@ public class traitement_donnee {
 				separationAuxHashtag(F.getAbsolutePath(), F_End.getAbsolutePath());
 				
 				for(File FF:F_End.listFiles()) {
+					
 					BufferedReader bufr = new BufferedReader(new FileReader(FF));
 					String line;
 					for (int j=0;j<9;j++) {
@@ -151,7 +152,7 @@ public class traitement_donnee {
 					System.out.println("ifseopfeopfsepofepkf");
 					bufr.close();
 					Echantillione(FF.getAbsolutePath(), F_End.getAbsolutePath(), 200,  FEB);
-				}
+					FF.delete();				}
 				
 			}
 		}
