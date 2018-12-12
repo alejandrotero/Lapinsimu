@@ -16,6 +16,7 @@ public class EventInTheTrace {
 	private double endingTime;
 	private double endingTimeValue;
 	private int index;
+	public String nomFicher;
 	//True if this event finished before the data finished, false if not
 	private boolean endedBeforeDataFinished;
 	
@@ -60,9 +61,10 @@ public class EventInTheTrace {
 		this.endingTimeValue = endingTimeValue;
 		this.peak = peak;
 	}
-	public EventInTheTrace(int index) {
+	public EventInTheTrace(int index,String nomFicher) {
 		this.index=index;
 		endedBeforeDataFinished=true;
+		this.nomFicher=nomFicher;
 	}
 	@Override
 	public String toString() {
@@ -70,7 +72,8 @@ public class EventInTheTrace {
 				"\n [ startingTime=" + getStringTime(startingTime) + ", startingTimeValue=" + startingTimeValue
 				+ ", \n timeOfExtremePoint=" + getStringTime(timeOfExtremePoint) + ", extremePointValue=" + extremePointValue
 				+ ", \n endingTime=" + getStringTime(endingTime) + ", endingTimeValue=" + endingTimeValue +
-				 ", \n peak=" + peak+" ,completeData=" + endedBeforeDataFinished +" ]";
+				 ", \n peak=" + peak+" ,completeData=" + endedBeforeDataFinished +
+				 ", \n nomFicher=" + nomFicher+" ]";
 	}
 	private static String getStringTime(double timeInSeconds) {
 		String result = timeInSeconds + " seconds ( ";

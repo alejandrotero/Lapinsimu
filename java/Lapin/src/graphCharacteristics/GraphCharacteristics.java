@@ -1,11 +1,20 @@
 package graphCharacteristics;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GraphCharacteristics {
 	public Data data;
 	
+	public void setData(Data data) {
+		this.data = data;
+	}
+
+
+
 	public double getMoyenne(List<Double> points) {
 	 double result=0;
 	 for (double element : points) {
@@ -13,27 +22,54 @@ public class GraphCharacteristics {
 	}
 	 return result/points.size();
 	}
-	
-
-
-	public GraphCharacteristics(Data data) {
-		this.data = data;
-	}
 
 
 
 	public static void main(String[] args) {
-		Data data = new Data("data/sequence10.txt");
-		data.eliminateRepeatedPAMoyenne();
-		GraphCharacteristics chara = new GraphCharacteristics(data);
-		List<EventInTheTrace> eventsInTheTrace = chara.getVariations(data.getUniqueTimes(), data.getPressionArterielleMoyenne(), 10, 0.2);
+		//List<EventInTheTrace> eventsInTheTrace = individualAnalyse("data/sequence4-10.txt");
+		List<EventInTheTrace> eventsInTheTrace = multipleAnalyse("data");
+		
 		for (EventInTheTrace eventInTheTrace : eventsInTheTrace) {
 			System.out.println(eventInTheTrace.toString());
 			System.out.println();
 		}
-		
 	}
 	
+	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {
+		File rep = new File(folderPath);
+		File[] fichiersTxt = rep.listFiles();
+		List<EventInTheTrace> eventsInTheTrace = new ArrayList<>();
+		
+		for (File F: fichiersTxt) {
+			eventsInTheTrace.addAll(individualAnalyse(F.getAbsolutePath()));
+		}
+		return eventsInTheTrace;
+	}
+
+
+
+	private static List<EventInTheTrace> individualAnalyse(String path) {
+		GraphCharacteristics chara = new GraphCharacteristics();
+		Data data = new Data(path);
+		chara.setData(data);
+		data.eliminateRepeatedPAMoyenne();
+		double pourcentageOfChangement = 0.2;
+		List<EventInTheTrace> eventsInTheTrace = chara.getVariations(data.getUniqueTimes(), data.getPressionArterielleMoyenne(), 10, pourcentageOfChangement);
+		boolean ended = false;
+		while (eventsInTheTrace.size()==0 && !ended) {
+			pourcentageOfChangement-=0.05;
+			if (pourcentageOfChangement<=0) {
+				ended = true;
+				System.out.println("WARNING! no events found in the dataset");
+			} else {
+				eventsInTheTrace = chara.getVariations(data.getUniqueTimes(), data.getPressionArterielleMoyenne(), 10, pourcentageOfChangement);
+			}
+		}
+		return eventsInTheTrace;
+	}
+
+
+
 	private List<EventInTheTrace> getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
 		List<EventInTheTrace> eventsInTheTrace = new ArrayList<>();
 		//Special case for initialization
@@ -59,7 +95,7 @@ public class GraphCharacteristics {
 				
 				if (checkProximity(eventsInTheTrace,listTimes.get(i))) {
 					if (newEvent!=null) {
-						System.out.println("WARNING! at the time "+listTimes.get(i)+" one event started before another event ended.");
+						//System.out.println("WARNING! at the time "+listTimes.get(i)+" one event started before another event ended.");
 					}else {
 						//Special case when the changement is in the first values
 						int indexForKMoyenne = i-((int)parameterKMoyenne/2);
@@ -69,7 +105,7 @@ public class GraphCharacteristics {
 						double timeOfVariation = listTimes.get(indexForKMoyenne);
 						double valueInTheTimeOfVariation =valuesForAverage.get((int)parameterKMoyenne/2);
 						averageBeforeExtreme=average;
-						newEvent = new EventInTheTrace(eventsInTheTrace.size());
+						newEvent = new EventInTheTrace(eventsInTheTrace.size(),data.getNomFicher());
 						newEvent.setStartingTime(timeOfVariation, valueInTheTimeOfVariation);
 						eventsInTheTrace.add(newEvent);
 						if (variation<0) {
