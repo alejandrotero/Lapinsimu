@@ -23,7 +23,7 @@ public class GraphCharacteristics {
 
 
 	public static void main(String[] args) {
-		Data data = new Data("data/groupe 1.txt");
+		Data data = new Data("data/sequence10.txt");
 		data.eliminateRepeatedPAMoyenne();
 		GraphCharacteristics chara = new GraphCharacteristics(data);
 		List<EventInTheTrace> eventsInTheTrace = chara.getVariations(data.getUniqueTimes(), data.getPressionArterielleMoyenne(), 10, 0.2);
@@ -61,7 +61,12 @@ public class GraphCharacteristics {
 					if (newEvent!=null) {
 						System.out.println("WARNING! at the time "+listTimes.get(i)+" one event started before another event ended.");
 					}else {
-						double timeOfVariation = listTimes.get(i-((int)parameterKMoyenne/2));
+						//Special case when the changement is in the first values
+						int indexForKMoyenne = i-((int)parameterKMoyenne/2);
+						if (indexForKMoyenne<0) {
+							indexForKMoyenne=i;
+						}
+						double timeOfVariation = listTimes.get(indexForKMoyenne);
 						double valueInTheTimeOfVariation =valuesForAverage.get((int)parameterKMoyenne/2);
 						averageBeforeExtreme=average;
 						newEvent = new EventInTheTrace(eventsInTheTrace.size());
@@ -91,25 +96,33 @@ public class GraphCharacteristics {
 			
 			//Looks for the top of the peak or the bottom of the valley
 			if (newEvent!=null) {
+				boolean extremeValueChanged = false;
 				if (!newEvent.isPeak() && actualValue<extremeValue) {
 					extremeValue=actualValue;
 					timeOfExtreme=listTimes.get(i);
+					extremeValueChanged=true;
 					//System.out.println("minupdated"+peak+valley);
 				} else if (newEvent.isPeak() && actualValue>extremeValue) {
 					extremeValue=actualValue;
 					timeOfExtreme=listTimes.get(i);
+					extremeValueChanged=true;
 					//System.out.println("maxupdated"+peak+valley);
 				}
 				
 				//Check if the average returned to normal value
-				if (Math.abs(averageBeforeExtreme-average)<(averageBeforeExtreme*porcentageToChange*0.1)) {
-					//System.out.println("Maximun value: "+extremeValue+" at "+getStringTime(timeOfExtreme));
-					newEvent.setTimeOfExtremePoint(timeOfExtreme, extremeValue);
-					//System.out.println("Returned to normal comportament in the time "+getStringTime(listTimes.get(i))+"average before: "+averageBeforeExtreme+", average after: "+average);
-					newEvent.setEndingTime(listTimes.get(i), actualValue);
-					averageBeforeExtreme=0;
-					newEvent=null;
-				}
+				if (!extremeValueChanged||i==listTimes.size()-1) {
+					if (Math.abs(averageBeforeExtreme-average)<(averageBeforeExtreme*porcentageToChange*0.1)||i==listTimes.size()-1) {
+						newEvent.setTimeOfExtremePoint(timeOfExtreme, extremeValue);
+						//System.out.println("Returned to normal comportament in the time "+getStringTime(listTimes.get(i))+"average before: "+averageBeforeExtreme+", average after: "+average);
+						newEvent.setEndingTime(listTimes.get(i), actualValue);
+						averageBeforeExtreme=0;
+						if (i==listTimes.size()-1) {
+							newEvent.setEndedBeforeDataFinished(false);
+							//System.out.println("The data finished before arriving to the normal value");
+						}
+						newEvent=null;
+					}
+				}	
 			}
 			
 			
@@ -127,14 +140,11 @@ public class GraphCharacteristics {
 		boolean result = true;
 		if (!eventsInTheTrace.isEmpty()) {
 			//At least there must be n seconds between two changements
-			int n = 2;
+			int n = 20;
 			if (checkingTime-eventsInTheTrace.get(eventsInTheTrace.size()-1).getStartingTime()<n) {
 				result = false;
 			} 
 		} 
 		return result;
 	}
-
-	
-
 }
