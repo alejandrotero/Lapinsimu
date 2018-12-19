@@ -24,7 +24,7 @@ public class GraphCharacteristics {
 
 
 	public static void main(String[] args) {
-		//List<EventInTheTrace> eventsInTheTrace = individualAnalyse("data/sequence4-10.txt");
+		//List<EventInTheTrace> eventsInTheTrace = individualAnalyse("data/sequence5-2.txt");
 		List<EventInTheTrace> eventsInTheTrace = multipleAnalyse("data");
 		
 		for (EventInTheTrace eventInTheTrace : eventsInTheTrace) {
@@ -84,7 +84,8 @@ public class GraphCharacteristics {
 		double extremeValue = 0;
 		double timeOfExtreme = 0;
 		double averageBeforeExtreme = 0;
-		
+		double firstTimeinDB=listTimes.get(0);
+		double firstValueinDB=listValues.get(0);
 		
 		for (int i = 0; i < listTimes.size(); i++) {
 			double actualValue =listValues.get(i);
@@ -103,7 +104,7 @@ public class GraphCharacteristics {
 						double timeOfVariation = listTimes.get(indexForKMoyenne);
 						double valueInTheTimeOfVariation =valuesForAverage.get((int)parameterKMoyenne/2);
 						averageBeforeExtreme=average;
-						newEvent = new EventInTheTrace(eventsInTheTrace.size(),data.getNomFicher());
+						newEvent = new EventInTheTrace(eventsInTheTrace.size(),data.getNomFicher(),firstTimeinDB,firstValueinDB);
 						newEvent.setStartingTime(timeOfVariation, valueInTheTimeOfVariation);
 						eventsInTheTrace.add(newEvent);
 						if (variation<0) {
@@ -178,7 +179,7 @@ public class GraphCharacteristics {
 		boolean result = true;
 		if (!eventsInTheTrace.isEmpty()) {
 			//At least there must be n seconds between two changements
-			int n = 20;
+			int n = 10;
 			if (checkingTime-eventsInTheTrace.get(eventsInTheTrace.size()-1).getStartingTime()<n) {
 				result = false;
 			} 

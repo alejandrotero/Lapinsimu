@@ -19,6 +19,8 @@ public class EventInTheTrace {
 	public String nomFicher;
 	//True if this event finished before the data finished, false if not
 	private boolean endedBeforeDataFinished;
+	private double firstTimeinDB;
+	private double firstValueinDB;
 	
 	public double getStartingTime() {
 		return startingTime;
@@ -61,15 +63,18 @@ public class EventInTheTrace {
 		this.endingTimeValue = endingTimeValue;
 		this.peak = peak;
 	}
-	public EventInTheTrace(int index,String nomFicher) {
+	public EventInTheTrace(int index,String nomFicher,double firstTimeinDB,double firstValueinDB) {
 		this.index=index;
 		endedBeforeDataFinished=true;
 		this.nomFicher=nomFicher;
+		this.firstTimeinDB = firstTimeinDB;
+		this.firstValueinDB = firstValueinDB;
 	}
 	@Override
 	public String toString() {
 		return "eventInTheTrace: "+index+
-				"\n [ startingTime=" + getStringTime(startingTime) + ", startingTimeValue=" + startingTimeValue
+				"\n [ firstTimeinDB=" + getStringTime(firstTimeinDB) + ", firstValueinDB=" + firstValueinDB
+				+", \n startingTime=" + getStringTime(startingTime) + ", startingTimeValue=" + startingTimeValue
 				+ ", \n timeOfExtremePoint=" + getStringTime(timeOfExtremePoint) + ", extremePointValue=" + extremePointValue
 				+ ", \n endingTime=" + getStringTime(endingTime) + ", endingTimeValue=" + endingTimeValue +
 				 ", \n peak=" + peak+" ,completeData=" + endedBeforeDataFinished +
