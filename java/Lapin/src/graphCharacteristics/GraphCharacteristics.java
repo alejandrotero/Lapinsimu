@@ -1,8 +1,11 @@
 package graphCharacteristics;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class GraphCharacteristics {
 	public Data data;
@@ -24,13 +27,26 @@ public class GraphCharacteristics {
 
 
 	public static void main(String[] args) {
-		//List<EventInTheTrace> eventsInTheTrace = individualAnalyse("data/sequence5-2.txt");
-		List<EventInTheTrace> eventsInTheTrace = multipleAnalyse("data");
+		/*/
+		List<EventInTheTrace> eventsInTheTrace = individualAnalyse("data/sequence5-3.txt");
+		//List<EventInTheTrace> eventsInTheTrace = multipleAnalyse("data");
 		
 		for (EventInTheTrace eventInTheTrace : eventsInTheTrace) {
-			System.out.println(eventInTheTrace.toString());
-			System.out.println();
+			//System.out.println(eventInTheTrace.toString());
+			System.out.println(eventInTheTrace.nomFicher + "\t" +
+			eventInTheTrace.getFirstTimeinDB()+ "\t" +
+			eventInTheTrace.getFirstValueinDB()+ "\t" +
+			eventInTheTrace.getStartingTime()+ "\t" +
+			eventInTheTrace.getStartingTimeValue()+ "\t" +
+			eventInTheTrace.getTimeOfExtremePoint()+ "\t" +
+			eventInTheTrace.getExtremePointValue()+ "\t" +
+			eventInTheTrace.getEndingTime()+ "\t" +
+			eventInTheTrace.getEndingTimeValue()+ "\t" +
+			eventInTheTrace.isEndedBeforeDataFinished()
+			);
 		}
+		/*/
+		generateTxtForMatlab("data/sequence4-11.txt",500,1010);
 	}
 	
 	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {
@@ -44,7 +60,34 @@ public class GraphCharacteristics {
 		return eventsInTheTrace;
 	}
 
-
+	private static void generateTxtForMatlab(String path,double firstTime,double endingTime) {
+		GraphCharacteristics chara = new GraphCharacteristics();
+		Data data = new Data(path);
+		chara.setData(data);
+		data.eliminateRepeatedPAMoyenne();
+		File f = new File ("test.txt");
+		
+		 
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		    for (int i = 0; i < data.pressionArterielleMoyenne.size(); i++) {
+		    	
+		    	if (data.getUniqueTimes().get(i)<endingTime && data.getUniqueTimes().get(i)>firstTime) {
+		    		fw.write (data.getUniqueTimes().get(i)-firstTime+","+data.getPressionArterielleMoyenne().get(i));
+			        fw.write ("\n");
+				}
+		       
+		    }
+		 
+		    fw.close();
+		    System.out.println("Fichier created");
+		}
+		catch (IOException exception)
+		{
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		}
+	}
 
 	private static List<EventInTheTrace> individualAnalyse(String path) {
 		GraphCharacteristics chara = new GraphCharacteristics();
@@ -65,6 +108,7 @@ public class GraphCharacteristics {
 		}
 		return eventsInTheTrace;
 	}
+	
 
 
 

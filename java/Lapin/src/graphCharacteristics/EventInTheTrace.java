@@ -20,6 +20,18 @@ public class EventInTheTrace {
 	//True if this event finished before the data finished, false if not
 	private boolean endedBeforeDataFinished;
 	private double firstTimeinDB;
+	public int getIndex() {
+		return index;
+	}
+	public String getNomFicher() {
+		return nomFicher;
+	}
+	public double getFirstTimeinDB() {
+		return firstTimeinDB;
+	}
+	public double getFirstValueinDB() {
+		return firstValueinDB;
+	}
 	private double firstValueinDB;
 	
 	public double getStartingTime() {
