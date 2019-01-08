@@ -1,5 +1,6 @@
 package graphCharacteristics;
 import java.io.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.applet.Applet;
 
@@ -7,37 +8,64 @@ import java.applet.Applet;
 public class BattementCardiaque {
 	
 	public Data data;
-	Object[] valeursX ;
-	Object[] valeursY ;
+	List<Double> valeursX ;
+	List<Double> valeursY ;
 	
 	public BattementCardiaque(Data data) {
 		this.data = data;
 	}
 	
 	void extractionPattern() {
-		this.valeursX =  data.getTime().toArray();
-		this.valeursY =  data.getPressionArterielle().toArray();
-		for (int i=0; i<this.valeursX.length; i++) {
-			valeursY[i]=(double) valeursY[i]-48;
+		this.valeursX =  data.getTime();
+		this.valeursY =  data.getPressionArterielle();
+		for (int i=0; i<this.valeursX.size(); i++) {
+			valeursY.set(i, valeursY.get(i)-48) ;
 
 		}
 		
 	}
 	
-	void creationFichier1Battement() {
+	double getMax() {
+		double aux=this.valeursY.get(0);
+		for (int i=0; i<this.valeursX.size(); i++) {
+			if(this.valeursY.get(i)>aux) aux=this.valeursY.get(i);
+		}
+		return aux;
+		
+	}
+	
+	double getMin() {
+		double aux=this.valeursY.get(0);
+		for (int i=0; i<this.valeursX.size(); i++) {
+			if(this.valeursY.get(i)<aux) aux=this.valeursY.get(i);
+		}
+		return aux;
+		
+	}
+	
+	void modulationPattern(double periode, double amplitude) {
+		double t0=this.valeursX.get(0);
+		for (int i=0; i<this.valeursX.size(); i++) {
+			double valTn=i*periode/this.valeursX.size()+t0;
+			this.valeursX.set(i, valTn);
+		}
+		//this.valeursY.
+	}
+	
+	void creationFichier1Battement(String nomFichier) {
 			
-			File f = new File ("test.txt");
+			File f = new File (nomFichier);
 			
 			 
 			try
 			{
 			    FileWriter fw = new FileWriter (f);
-			    System.out.println(this.valeursX.length);
+			    
 			 
-			    for (int i=0; i<this.valeursX.length; i++)
+			    for (int i=0; i<this.valeursX.size(); i++)
 			    {
-			    	String sX=(String.valueOf ((double) this.valeursX[i]));
-			    	String sY=(String.valueOf ((double) this.valeursY[i]));
+			    	String sX=(String.valueOf ( this.valeursX.get(i)));
+			    	String sY=(String.valueOf ( this.valeursY.get(i)));
 			    	sX=sX.replace('.', ',');
 			    	sY=sY.replace('.', ',');
 			    	fw.write (sX+"\t");
@@ -58,7 +86,9 @@ public class BattementCardiaque {
 			Data data= new Data("Data Ana/Pattern.txt");
 			BattementCardiaque pattern = new BattementCardiaque(data);
 			pattern.extractionPattern();
-			pattern.creationFichier1Battement();
+			pattern.creationFichier1Battement("Original.txt");
+			pattern.modulationPattern(10, 1);
+			pattern.creationFichier1Battement("Module.txt");
 			
 		}
 
