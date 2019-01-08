@@ -46,7 +46,7 @@ public class GraphCharacteristics {
 			);
 		}
 		/*/
-		generateTxtForMatlab("data/sequence4-11.txt",500,1010);
+		generateTxtForMatlab("data/sequence4-10.txt",1190,1400);
 	}
 	
 	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {
@@ -71,10 +71,13 @@ public class GraphCharacteristics {
 		try
 		{
 		    FileWriter fw = new FileWriter (f);
+		    double realTime = -1;
 		    for (int i = 0; i < data.pressionArterielleMoyenne.size(); i++) {
-		    	
-		    	if (data.getUniqueTimes().get(i)<endingTime && data.getUniqueTimes().get(i)>firstTime) {
-		    		fw.write (data.getUniqueTimes().get(i)-firstTime+","+data.getPressionArterielleMoyenne().get(i));
+		    	if (data.getUniqueTimes().get(i)>=firstTime&& realTime==-1) {
+					realTime = data.getUniqueTimes().get(i);
+				}
+		    	if (data.getUniqueTimes().get(i)>=firstTime&&data.getUniqueTimes().get(i)<endingTime) {
+		    		fw.write (data.getUniqueTimes().get(i)-realTime+","+data.getPressionArterielleMoyenne().get(i));
 			        fw.write ("\n");
 				}
 		       
