@@ -1,0 +1,21 @@
+{
+    "name": "Lapin_app",
+    "version": "0.1.0",
+    "description": "Lapin Node.js avec Docker",
+    "author": "Gugulliver <first.last@example.com>",
+    "main": "http_server.js",
+    "scripts": {
+      "start": "node http_server.js"
+    },
+    "dependencies": {
+      "influx": "*",
+      "parse": "*",
+      "cors":  "*",
+      "url":  "*",
+      "fs":  "*",
+      "http":  "*",
+      "os": "*",
+      "express": "^4.16.1"
+    }
+  }
+  
