@@ -40,16 +40,6 @@ var debut = new Date().getTime();
 
     var now = new Date();
 
-    // get db object
-    influxdb = new InfluxDB({
-        "host" :"localhost",
-        "port" :"8086",
-        "username" :"root",
-        "password" :"root",
-        "database" :"test"
-      });
-    
-
     //
 var d = 0;
 function dataGenerator() {
@@ -67,11 +57,6 @@ function dataGenerator() {
         request.responseType = 'json';
         request.send();
         var pressionA;
-
-        var PressionA2 = influxdb.readPoint('value', 'pression')
-        console.log("pressionA2");
-        console.log(PressionA2);
-                
                 
         request.onload = function() {
             pressionA  = request.response.int;
@@ -80,8 +65,6 @@ function dataGenerator() {
 
             time1  = request.response.time;
             console.log("time");
-            //console.log(time1*1000);
-
             var time2 = new Date(time1);
             console.log(time1) 
 
@@ -90,7 +73,6 @@ function dataGenerator() {
             callback(time1, pressionA)
         }
     }
-
         //pressionA
         function mainboucle(time,valeur){   
             console.log("valeur");                 
@@ -108,5 +90,5 @@ function dataGenerator() {
     }, timeout);
 }
 
-        // start the data generator
-        dataGenerator();
+      // start the data generator
+      dataGenerator();

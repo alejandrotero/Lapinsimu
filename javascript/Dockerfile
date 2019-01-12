@@ -18,6 +18,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+#ADD "min.txt"
 EXPOSE 3000
 CMD [ "npm", "start" ]
 
