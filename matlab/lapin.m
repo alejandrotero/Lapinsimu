@@ -1,9 +1,9 @@
-clear ; close all; clc
-
-fprintf('Loading data ...\n');
+function out = lapin(filePath)
+%clear ; close all; clc
+%fprintf('Loading data ...\n');
 
 %% Load Data
-data = load('test.txt');
+data = load(filePath);
 X = data(:, 1);
 y = data(:, 2);
 m = length(y);
@@ -27,11 +27,17 @@ options = optimset('GradObj', 'on', 'MaxIter', 400000);
 	fminunc(@(t)(costFunction(t, X, y, lambda)), initial_theta, options);
 
   % Display  result
-fprintf('Theta computed : \n');
-fprintf(' %f  ', theta);
-fprintf('\n');
-fprintf('Std Error : \n');
-fprintf(' %f \n', J);
+%fprintf('Theta computed : \n');
+%fprintf(' %f  ', theta);
+%fprintf('\n');
+%fprintf('Std Error : \n');
+%fprintf(' %f \n', J);
+
+out=[filePath];
+for i = 1:size(theta)
+    out =[out strcat(';',num2str(theta(i)))];
+end
+out=[out num2str(J)];
 
 % Plot the linear fit
 hold on; % keep previous plot visible
@@ -41,3 +47,4 @@ hold off % don't overlay any more plots on this figure
 
 %pp = interp1(data(:, 1),y,'pchip','pp');
 %[breaks,coefs,L,order,dim] =unmkpp(pp)
+end

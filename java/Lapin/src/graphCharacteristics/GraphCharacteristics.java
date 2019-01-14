@@ -46,7 +46,7 @@ public class GraphCharacteristics {
 			);
 		}
 		/*/
-		generateTxtForMatlab("data/sequence4-10.txt",1190,1400);
+		generateTxtForMatlab("data/sequence4-10.txt",1182,1211);
 	}
 	
 	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {
@@ -65,7 +65,7 @@ public class GraphCharacteristics {
 		Data data = new Data(path);
 		chara.setData(data);
 		data.eliminateRepeatedPAMoyenne();
-		File f = new File ("test.txt");
+		File f = new File (data.nomFicher);
 		
 		 
 		try
