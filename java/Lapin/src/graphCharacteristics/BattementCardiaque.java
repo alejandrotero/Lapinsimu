@@ -43,13 +43,22 @@ public class BattementCardiaque {
 		
 	}
 	
-	void modulationPattern(double periode, double amplitude) {
+	double getAmplitude() {
+		return this.getMax()-this.getMin();
+	}
+	
+	void modulationPattern(double periode, double nouvelleAmplitude) {
 		double t0=this.valeursX.get(0);
 		for (int i=0; i<this.valeursX.size(); i++) {
 			double valTn=i*periode/this.valeursX.size()+t0;
 			this.valeursX.set(i, valTn);
 		}
-		//this.valeursY.
+		double coefficientMultiplicateur=nouvelleAmplitude/this.getAmplitude();
+		for (int i=0; i<this.valeursX.size(); i++) {
+			double valTn=this.valeursY.get(i)*coefficientMultiplicateur;
+			this.valeursY.set(i, valTn);
+		}
+		
 	}
 	
 	void creationFichier1Battement(String nomFichier) {
@@ -87,7 +96,7 @@ public class BattementCardiaque {
 			BattementCardiaque pattern = new BattementCardiaque(data);
 			pattern.extractionPattern();
 			pattern.creationFichier1Battement("Original.txt");
-			pattern.modulationPattern(10, 1);
+			pattern.modulationPattern(10, 10);
 			pattern.creationFichier1Battement("Module.txt");
 			
 		}
