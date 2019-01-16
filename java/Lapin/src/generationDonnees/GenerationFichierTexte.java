@@ -1,4 +1,4 @@
-package coupage;
+package generationDonnees;
 
 import java.awt.event.KeyEvent;
 import java.io.*;
