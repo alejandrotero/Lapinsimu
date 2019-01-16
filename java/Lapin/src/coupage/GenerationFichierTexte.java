@@ -1,5 +1,6 @@
 package coupage;
 
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.lang.Math.*;
 import java.util.*;
@@ -8,6 +9,13 @@ import java.util.concurrent.TimeUnit;
 
 
 public class GenerationFichierTexte {
+	
+	private int evenement;
+	
+	public GenerationFichierTexte() {
+		this.evenement=0;
+	}
+	
 
 	void creationFichier() {
 		
@@ -29,14 +37,24 @@ public class GenerationFichierTexte {
 		    {
 		    	java.util.Date date= new java.util.Date();
 		        String heure = date.toString();
+		        
+		        double valFonction=20;
+		        
+		        if (d>3 /*modélisation évènement pour changer de fonction*/) {
+		        	valFonction=Math.sin((d));
+		        }
+		        else {
+		        	valFonction=20;
+		        }
 	
-		        double valFonction=Math.sin((d));
+		        // pour l'instant génère un fichier texte mais à la place on écrira les points dans la base de données
 		    	fw.write ((String.valueOf (d)).substring(0, 3)+"\t");
 		    	fw.write (heure+"\t");
-		    	fw.write ((String.valueOf (valFonction)).substring(0, 6));
+		    	fw.write ((String.valueOf (valFonction)).substring(0, 4));
 		        fw.write ("\r\n");
+		        System.out.println(d+"        "+heure+"        "+ valFonction);
 		        TimeUnit.SECONDS.sleep(1);
-		        System.out.println(heure);
+		       
 		        
 		        
 		        
@@ -53,6 +71,10 @@ public class GenerationFichierTexte {
 		}
 		
 		
+	}
+	
+	void keyPressed(KeyEvent e) { // ??
+		this.evenement=1;
 	}
 	
 	
