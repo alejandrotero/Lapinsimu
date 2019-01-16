@@ -16,7 +16,12 @@ public class GenerationFichierTexte {
 		this.evenement=0;
 	}
 	
-
+	public static FonctionQuadratique createFonctionMonteAdrenaline(double thetha0) {
+		FonctionQuadratique function = new FonctionQuadratique(thetha0,
+				5.44, 5.31, //mu et var de la distribution normal de thetha1
+				-0.0366, 0.0795);//coef de la regression entre theha1 et thetha2
+		return function;
+	}
 	void creationFichier() {
 		
 		double[] data = new double[50];
@@ -83,7 +88,12 @@ public class GenerationFichierTexte {
 	
 	public static void main(String[] argv) {
 		GenerationFichierTexte f1 = new GenerationFichierTexte();
-		f1.creationFichier();
+		//f1.creationFichier();
+		for (int i = 0; i < 100; i++) {
+			FonctionQuadratique f = createFonctionMonteAdrenaline(45+10*Math.random());
+			//System.out.println(f.toString());
+			System.out.println(f.getTheta0()+" "+f.getTheta1()+" "+f.getTheta2()+";");
+		}
 	}
 
 }
