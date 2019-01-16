@@ -69,6 +69,8 @@ app.get('/', function (req, res) {
   var query = url.parse(req.url,true);
 
   if  ( query.query['requestType'] == 'getdata' ) {
+    console.log("err");
+
 	  setTimeout(function () {
       //read the file of local data, only for testing
       fs.readFile('min.txt', {encoding: 'utf-8'}, function(err,data){
@@ -83,7 +85,7 @@ app.get('/', function (req, res) {
           t  = t.replace(',', '.');
 
           //temps moche
-          console.log(t)
+          //console.log(t)
 
           //décalag pour ce jeux de donnée uniquement
           t  =debut+((t-6000)*1000)
@@ -100,6 +102,7 @@ app.get('/', function (req, res) {
                 fields: { value: d2, timey: t2 },
               }
             ]);
+            //console.log("write :"+d2)
           
           //////////////////////////////////////////////////////
           //lecture dans le DB
@@ -110,11 +113,13 @@ app.get('/', function (req, res) {
                 limit 1
               `)
             .then(rows => {
-              rows.forEach(row => {console.log(row, row.value), res.send({time: row.timey, int : row.value})})
+              rows.forEach(row => { res.send({time: row.timey, int : row.value})})
             }).catch(function (err) {
               console.log("Promise Rejected: ", err);
          });
-
+         console.log("durée :");
+         console.log(debut -new Date().getTime());
+         //console.log(row, row.value),
           ///////////////////
 
           //console.log(d3)
@@ -125,8 +130,24 @@ app.get('/', function (req, res) {
           console.log(err);
         }});
         i++;
-      }, 50);
+      }, 1);
   }
+  /*else{
+    console.log("Request for " + query.pathname + " received.");
+
+    res.writeHead(200);
+
+    if(query.pathname == "/h") {
+        html = fs.readFileSync("affichage.html", "utf8");
+        res.write(html);
+    }if (query.pathname == "/graph.js") {
+        script = fs.readFileSync("graph.js", "utf8");
+        res.write(script);
+    }
+
+  res.end();
+  }
+  //*/
 })
 
 //////////////////////////////////////////////////////

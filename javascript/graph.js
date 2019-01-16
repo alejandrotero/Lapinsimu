@@ -44,7 +44,7 @@ var debut = new Date().getTime();
 var d = 0;
 function dataGenerator() {
             
-    var timeout = Math.round(50);
+    var timeout = Math.round(1);
     setTimeout(function() {
 
         // create new data item
