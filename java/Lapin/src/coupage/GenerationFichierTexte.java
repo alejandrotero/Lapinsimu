@@ -41,10 +41,10 @@ public class GenerationFichierTexte {
 		        double valFonction=20;
 		        
 		        if (d>3 /*modélisation évènement pour changer de fonction*/) {
-		        	valFonction=Math.sin((d));
+		        	valFonction=Math.sin((d)); // fonction après injection
 		        }
 		        else {
-		        	valFonction=20;
+		        	valFonction=20; // fonction quand lapin au repos
 		        }
 	
 		        // pour l'instant génère un fichier texte mais à la place on écrira les points dans la base de données
@@ -72,6 +72,8 @@ public class GenerationFichierTexte {
 		
 		
 	}
+	
+	
 	
 	void keyPressed(KeyEvent e) { // ??
 		this.evenement=1;
