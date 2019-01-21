@@ -1,4 +1,4 @@
-function out = lapin(filePath)
+function [out, polyFeatures] = lapin(filePath)
 %clear ; close all; clc
 %fprintf('Loading data ...\n');
 
@@ -10,9 +10,8 @@ m = length(y);
 plotData(X, y);
 
 %Add the polynomial colummns to the data, the first value is always 1 (the thetha0)
-degree=3;
-X=mapFeature(X,degree);
-
+degree=2;
+[X,polyFeatures]=mapFeature(X,degree);
 % Initialize fitting parameters
 initial_theta = zeros(size(X,2), 1);
 
@@ -37,11 +36,14 @@ out=[filePath];
 for i = 1:size(theta)
     out =[out strcat(';',num2str(theta(i)))];
 end
-out=[out num2str(J)];
+out=[out strcat(';',num2str(J))];
 
 % Plot the linear fit
 hold on; % keep previous plot visible
-plot(X(:,2), X*theta, '-')
+graf = linspace(0,50,2000);
+[graf,polyFeatures2]=mapFeature(graf',degree);
+
+plot(graf(:,2), graf*theta, '-')
 legend('Training data', 'Polinomial regression')
 hold off % don't overlay any more plots on this figure
 
