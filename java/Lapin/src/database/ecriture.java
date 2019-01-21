@@ -12,15 +12,23 @@ utiliser plutot les fonctions ecrire et lire de ecriteur
 bisous a tous
 */
     public static void main(String[] args) {
+        
+        long date = System.currentTimeMillis();
+
         ecriteur e = new ecriteur();
         System.out.println("creation");
-        e.creerDB("mydbfinal");
-
+        e.creerDB("express_response_db");
+        System.out.println("");
+        Integer a = 11;
         System.out.println("ecriture");
-        e.ecrire("express_response_db", 10, 10);
+        e.ecrire("express_response_db", a, date);
+        System.out.println("");
 
         System.out.println("lecture");
-        e.lire("express_response_db");
+        System.out.println(e.lire("express_response_db"));
+
+
+
         System.out.println("fin");
 
 
