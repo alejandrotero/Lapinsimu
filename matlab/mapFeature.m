@@ -1,4 +1,4 @@
-function out = mapFeature(X1, degree)
+function [out, polyFeatures] = mapFeature(X1, degree)
 % MAPFEATURE Feature mapping function to polynomial features
 %
 %   MAPFEATURE(X1, X2) maps the two input features
@@ -19,7 +19,7 @@ end
 %out(:, end+1) = (log(X1));
 %out(:, end+1) = (exp(X1));
 %out(:, end+1) = (sin(X1));
-for j = 2:degree
+for j = 2:0
         out(:, end+1) = X1.^(1/j);
         polyFeatures=[polyFeatures;strcat('X1^1/',num2str(j))];
 end
