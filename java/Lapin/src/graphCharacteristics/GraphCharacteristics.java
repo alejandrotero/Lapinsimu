@@ -46,7 +46,7 @@ public class GraphCharacteristics {
 			);
 		}
 		/*/
-		generateTxtForMatlab("data/sequence4-10.txt",1182,1211);
+		generateTxtForMatlab("data/sequence4-13.txt",2596,2672);
 	}
 	
 	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {

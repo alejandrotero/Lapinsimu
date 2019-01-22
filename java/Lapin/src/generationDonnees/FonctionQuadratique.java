@@ -13,16 +13,23 @@ public class FonctionQuadratique {
 		this.theta1=theta1;
 		this.theta2=theta2;
 	}
-	public FonctionQuadratique(double theta0,double muPourThetha1,double varPourTheta1,double coeffA2Regression,double coeffB2Regression) {
+	public FonctionQuadratique(double theta0,double muPourThetha1,double ecartPourTheta1,double minTheta1,double maxTheta1,double coeffA2Regression,double coeffB2Regression, double r2) {
 		this.theta0=theta0;
-		this.theta1=generatePremierTheta(muPourThetha1,varPourTheta1);
-		this.theta2=generateDeuxiemeTheta(theta1, coeffA2Regression, coeffB2Regression);
+		this.theta1=generatePremierTheta(muPourThetha1,ecartPourTheta1,minTheta1,maxTheta1);
+		this.theta2=generateDeuxiemeTheta(theta1, coeffA2Regression, coeffB2Regression,r2);
 	}
-	
-private double generatePremierTheta(double muPourThetha1, double varPourTheta1) {
+
+	public static double generateNormalRandomNumber(double mu,double ecart) {
 		Random gen = new Random();
-		double rnd = gen.nextGaussian();
-		return rnd*varPourTheta1+muPourThetha1;
+		return gen.nextGaussian()*ecart+mu;
+	}
+private double generatePremierTheta(double muPourThetha1, double ecartPourTheta1,double minTheta1,double maxTheta1) {
+		
+		double theta1 = generateNormalRandomNumber(muPourThetha1, ecartPourTheta1);
+		while(theta1<minTheta1||theta1>maxTheta1) {
+			theta1 =generateNormalRandomNumber(muPourThetha1, ecartPourTheta1);
+		}
+		return theta1;
 	}
 @Override
 public String toString() {
@@ -33,10 +40,13 @@ public String toString() {
  * @param theta1
  * @param coeffA2Regression
  * @param coeffB2Regression
+ * @param r2 error de la regression
  * @return thetha2
  */
-private double generateDeuxiemeTheta(double theta1, double coeffA2Regression, double coeffB2Regression) {
-		return (coeffA2Regression*theta1)+coeffB2Regression;
+
+private double generateDeuxiemeTheta(double theta1, double coeffA2Regression, double coeffB2Regression, double r2) {
+		double tetha2=(coeffA2Regression*theta1)+coeffB2Regression;
+		return tetha2*(1+((1-r2)*Math.random()));
 	}
 	public double getValue(double x) {
 		return (this.theta0+this.theta1*x+this.theta2*x*x);
