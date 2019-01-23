@@ -5,7 +5,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class ecriture {
+public class TestDB {
 /*
 Class de test pour moi,
 utiliser plutot les fonctions ecrire et lire de ecriteur
@@ -15,7 +15,7 @@ bisous a tous
 
         long date = System.currentTimeMillis();
 
-        ecriteur e = new ecriteur();
+        Scribe e = new Scribe();
         System.out.println("creation");
         e.creerDB("express_response_db");
         System.out.println("");

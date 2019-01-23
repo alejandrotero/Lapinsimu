@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import database.ecriteur;
+import database.Scribe;
 
 public class Main {
 
@@ -17,9 +17,9 @@ public class Main {
 		String nomDB1="pression";
 		String nomDB2="event";
 		
-		ecriteur ec = new ecriteur();
-		ec.creerDB(nomDB1);
-		ec.creerDB(nomDB2);
+		Scribe writter = new Scribe();
+		writter.creerDB(nomDB1);
+		writter.creerDB(nomDB2);
 		
 		List<Events> listEvents = new ArrayList<>();
 		
@@ -31,7 +31,7 @@ public class Main {
 			Events event=demandeEvent(currentTime, nomDB2,listEvents);
 			
 			//Ecrire dans la DB
-			ec.generePoint(currentTime, nomDB1, event);
+			writter.generePoint(currentTime, nomDB1, event);
 			
 			
 			TimeUnit.MILLISECONDS.sleep(miliseconds);
@@ -44,6 +44,7 @@ public class Main {
 		if (currentTime>10000) {
 			if (listEvents.size()==0) {
 				reponse=Events.ADRENALINE;
+				listEvents.add(reponse);
 			} 
 		} 
 		return reponse;

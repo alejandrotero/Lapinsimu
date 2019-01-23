@@ -8,7 +8,7 @@ import generationDonnees.FonctionQuadratique;
 import java.net.*;
 import java.io.*;
 
-public class ecriteur {
+public class Scribe {
     private static HttpURLConnection client;
     URL input;
     Events etatCourant = null;
@@ -158,16 +158,18 @@ public class ecriteur {
 			etatCourant=Events.REPOS;
 			valeurInitial = FonctionQuadratique.generateNormalRandomNumber(100, 16.48);
 			valeurAecrire=valeurInitial;
-		} else if (event!=null && event!=etatCourant) {
-			etatCourant=event;
-			FonctionQuadratique fMont = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
-			FonctionQuadratique fDesc = FonctionQuadratique.createFonctionDescendAdrenaline(valeurInitial);
-			adrenaline = new Courbe(fMont, fDesc, currentTime, valeurInitial);
-			valeurAecrire = adrenaline.getValeur(currentTime);
-		}else{
-			valeurAecrire = adrenaline.getValeur(currentTime);
+		} else {
+			if (event.equals(Events.ADRENALINE)) {
+				etatCourant=Events.ADRENALINE;
+				FonctionQuadratique fMont = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
+				FonctionQuadratique fDesc = FonctionQuadratique.createFonctionDescendAdrenaline(valeurInitial);
+				adrenaline = new Courbe(fMont, fDesc, currentTime, valeurInitial);
+				valeurAecrire = adrenaline.getValeur(currentTime);
+			}else{
+				valeurAecrire = adrenaline.getValeur(currentTime);
+			}
+			ecrire(nomDB, valeurAecrire, currentTime);
 		}
-		ecrire(nomDB, valeurAecrire, currentTime);
 	}
 
 
