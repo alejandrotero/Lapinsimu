@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  influxdb:
+    image: influxdb
+    volumes:
+      - $PWD:/var/lib/influxdb
+    ports:
+     - "8086:8086"
+  
+  lapin:
+    build: ./javascript
+    ports:
+     - "8086:8086"
+     - "3000:3000"
+    depends_on:
+      - influxdb
