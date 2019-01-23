@@ -13,7 +13,7 @@ public class Scribe {
     URL input;
     Events etatCourant = null;
     Double valeurInitial;
-    Courbe adrenaline;
+    Courbe courbeAdrenaline;
 
     public void ecrire(String nomdb, double valeurAecrire,Long time){
         //http://localhost:8086/write?db=express_response_db' --data-binary 'pression,host=server01,timey=200 value=64'
@@ -150,23 +150,21 @@ public class Scribe {
 	
     
     public void generePoint(long currentTime, String nomDB, Events event) {
-    	//Time in secods
+    	//Time in seconds
     	currentTime=currentTime/1000;
     	
     	double valeurAecrire = valeurInitial;
 		if (etatCourant==null) {
 			etatCourant=Events.REPOS;
-			valeurInitial = FonctionQuadratique.generateNormalRandomNumber(100, 16.48);
+			valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
 			valeurAecrire=valeurInitial;
 		} else {
 			if (event.equals(Events.ADRENALINE)) {
 				etatCourant=Events.ADRENALINE;
-				FonctionQuadratique fMont = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
-				FonctionQuadratique fDesc = FonctionQuadratique.createFonctionDescendAdrenaline(valeurInitial);
-				adrenaline = new Courbe(fMont, fDesc, currentTime, valeurInitial);
-				valeurAecrire = adrenaline.getValeur(currentTime);
+				courbeAdrenaline = new Courbe(currentTime, valeurInitial);
+				valeurAecrire = courbeAdrenaline.getValeur(currentTime);
 			}else{
-				valeurAecrire = adrenaline.getValeur(currentTime);
+				valeurAecrire = courbeAdrenaline.getValeur(currentTime);
 			}
 			ecrire(nomDB, valeurAecrire, currentTime);
 		}
