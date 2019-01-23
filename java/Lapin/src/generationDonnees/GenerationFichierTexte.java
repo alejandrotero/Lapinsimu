@@ -20,16 +20,16 @@ public class GenerationFichierTexte {
 		FonctionQuadratique function = new FonctionQuadratique(thetha0,
 				5.4453, 2.3055, //mu et ecart de la distribution normal de thetha1
 				1, 11, //min et max de thetha1
-				-0.0366, 0.0795,//coef de la regression entre theha1 et thetha2
-				0.9158);//r2 de la regression entre theha1 et thetha2
+				-0.0366, 0.0795);//coef de la regression entre theha1 et thetha2
 		return function;
 	}
+	
 	public static FonctionQuadratique createFonctionDescendAdrenaline(double thetha0) {
 		FonctionQuadratique function = new FonctionQuadratique(thetha0,
 				-0.250888375, 0.102409935, //mu et ecart de la distribution normal de thetha1
 				-0.42, -0.07, //min et max de thetha1
-				-0.0028, -0.0004,//coef de la regression entre theha1 et thetha2
-				0.8599);//r2 de la regression entre theha1 et thetha2
+				-0.0028, -0.0004);//coef de la regression entre theha1 et thetha2
+				
 		return function;
 	}
 	
@@ -100,9 +100,9 @@ public class GenerationFichierTexte {
 	public static void main(String[] argv) {
 		//GenerationFichierTexte f1 = new GenerationFichierTexte();
 		//f1.creationFichier();
-		for (int i = 0; i < 10; i++) {
-			//FonctionQuadratique f = createFonctionMonteAdrenaline(FonctionQuadratique.generateNormalRandomNumber(46.59, 16.48));
-			FonctionQuadratique f = createFonctionDescendAdrenaline(FonctionQuadratique.generateNormalRandomNumber(100, 16.48));
+		for (int i = 0; i < 100; i++) {
+			FonctionQuadratique f = createFonctionMonteAdrenaline(FonctionQuadratique.generateNormalRandomNumber(46.59, 16.48));
+			//FonctionQuadratique f = createFonctionDescendAdrenaline(FonctionQuadratique.generateNormalRandomNumber(100, 16.48));
 			//System.out.println(f.toString());
 			System.out.println(f.getTheta0()+" "+f.getTheta1()+" "+f.getTheta2()+";");
 		}

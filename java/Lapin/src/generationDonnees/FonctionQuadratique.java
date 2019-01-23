@@ -13,10 +13,10 @@ public class FonctionQuadratique {
 		this.theta1=theta1;
 		this.theta2=theta2;
 	}
-	public FonctionQuadratique(double theta0,double muPourThetha1,double ecartPourTheta1,double minTheta1,double maxTheta1,double coeffA2Regression,double coeffB2Regression, double r2) {
+	public FonctionQuadratique(double theta0,double muPourThetha1,double ecartPourTheta1,double minTheta1,double maxTheta1,double coeffA2Regression,double coeffB2Regression) {
 		this.theta0=theta0;
 		this.theta1=generatePremierTheta(muPourThetha1,ecartPourTheta1,minTheta1,maxTheta1);
-		this.theta2=generateDeuxiemeTheta(theta1, coeffA2Regression, coeffB2Regression,r2);
+		this.theta2=generateDeuxiemeTheta(theta1, coeffA2Regression, coeffB2Regression);
 	}
 
 	public static double generateNormalRandomNumber(double mu,double ecart) {
@@ -40,13 +40,12 @@ public String toString() {
  * @param theta1
  * @param coeffA2Regression
  * @param coeffB2Regression
- * @param r2 error de la regression
  * @return thetha2
  */
 
-private double generateDeuxiemeTheta(double theta1, double coeffA2Regression, double coeffB2Regression, double r2) {
+private double generateDeuxiemeTheta(double theta1, double coeffA2Regression, double coeffB2Regression) {
 		double tetha2=(coeffA2Regression*theta1)+coeffB2Regression;
-		return tetha2*(1+((1-r2)*Math.random()));
+		return tetha2;
 	}
 	public double getValue(double x) {
 		return (this.theta0+this.theta1*x+this.theta2*x*x);
