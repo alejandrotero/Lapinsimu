@@ -48,11 +48,11 @@ public class FonctionQuadratique {
 			return tetha2;
 	}
 	
-	public double getMaxX() {
+	public double getMaxMinX() {
 		return (-this.theta1/(2*this.theta2));
 	}
 	
-	public double getMaxY() {
+	public double getMaxMinY() {
 		return (this.theta0-this.theta1*this.theta1/(2*this.theta2)+this.theta1*this.theta1/(4*this.theta2));
 	}
 	
