@@ -81,6 +81,9 @@ public class FonctionQuadratique {
 				-0.250888375, 0.102409935, //mu et ecart de la distribution normal de thetha1
 				-0.42, -0.07, //min et max de thetha1
 				-0.0028, -0.0004);//coef de la regression entre theha1 et thetha2
+		while (function.getMaxMinY()>thetha0 /*theta0debut*/) {
+			function =createFonctionDescendAdrenaline(thetha0);
+		}
 				
 		return function;
 	}
