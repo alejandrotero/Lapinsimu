@@ -68,6 +68,21 @@ public class FonctionQuadratique {
 	public double getTheta2() {
 		return theta2;
 	}
+	public static FonctionQuadratique createFonctionMonteAdrenaline(double thetha0) {
+		FonctionQuadratique function = new FonctionQuadratique(thetha0,
+				5.4453, 2.3055, //mu et ecart de la distribution normal de thetha1
+				1, 11, //min et max de thetha1
+				-0.0366, 0.0795);//coef de la regression entre theha1 et thetha2
+		return function;
+	}
 	
+	public static FonctionQuadratique createFonctionDescendAdrenaline(double thetha0) {
+		FonctionQuadratique function = new FonctionQuadratique(thetha0,
+				-0.250888375, 0.102409935, //mu et ecart de la distribution normal de thetha1
+				-0.42, -0.07, //min et max de thetha1
+				-0.0028, -0.0004);//coef de la regression entre theha1 et thetha2
+				
+		return function;
+	}
 
 }

@@ -1,7 +1,7 @@
 package generationDonnees;
 
 public enum Events {
-	ADRENALINE("Adrenaline"), MORT("Mort");
+	REPOS("Repos"),ADRENALINE("Adrenaline"), MORT("Mort");
 	
 	private String event;
 	 
