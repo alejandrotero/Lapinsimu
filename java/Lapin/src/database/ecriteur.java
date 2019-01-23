@@ -1,14 +1,21 @@
 package database;
 import java.net.HttpURLConnection;
 
+import generationDonnees.Courbe;
+import generationDonnees.Events;
+import generationDonnees.FonctionQuadratique;
+
 import java.net.*;
 import java.io.*;
 
 public class ecriteur {
-        private static HttpURLConnection client;
+    private static HttpURLConnection client;
     URL input;
+    Events etatCourant = null;
+    Double valeurInitial;
+    Courbe adrenaline;
 
-    public void ecrire(String nomdb, Integer valeur,Long time){
+    public void ecrire(String nomdb, double valeurAecrire,Long time){
         //http://localhost:8086/write?db=express_response_db' --data-binary 'pression,host=server01,timey=200 value=64'
         try{
         URL POST_URL2 = new URL("http", "localhost", 8086, "/write?db="+nomdb);
@@ -55,7 +62,7 @@ public class ecriteur {
     }
 
 
-    public static void creerDB(String nomdb){
+    public void creerDB(String nomdb){
         try{
             URL POST_URL = new URL("http", "localhost", 8086, "/query");
 
@@ -139,6 +146,27 @@ public class ecriteur {
             return "error";
         }
     }
+
+	
+    
+    public void generePoint(long currentTime, String nomDB, Events event) {
+    	//Time in secods
+    	currentTime=currentTime/1000;
+    	
+    	double valeurAecrire = valeurInitial;
+		if (etatCourant==null) {
+			etatCourant=Events.REPOS;
+			valeurInitial = FonctionQuadratique.generateNormalRandomNumber(100, 16.48);
+			valeurAecrire=valeurInitial;
+		} else if (event!=null && event!=etatCourant) {
+			etatCourant=event;
+			FonctionQuadratique fMont = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
+			FonctionQuadratique fDesc = FonctionQuadratique.createFonctionDescendAdrenaline(valeurInitial);
+			adrenaline = new Courbe(fMont, fDesc, currentTime, valeurInitial);
+			valeurAecrire = adrenaline.getValeur(currentTime);
+		}
+		ecrire(nomDB, valeurAecrire, currentTime);
+	}
 
 
 
