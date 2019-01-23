@@ -164,6 +164,8 @@ public class ecriteur {
 			FonctionQuadratique fDesc = FonctionQuadratique.createFonctionDescendAdrenaline(valeurInitial);
 			adrenaline = new Courbe(fMont, fDesc, currentTime, valeurInitial);
 			valeurAecrire = adrenaline.getValeur(currentTime);
+		}else{
+			valeurAecrire = adrenaline.getValeur(currentTime);
 		}
 		ecrire(nomDB, valeurAecrire, currentTime);
 	}
