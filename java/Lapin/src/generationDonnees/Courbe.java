@@ -23,8 +23,9 @@ public class Courbe {
 
 	public double getValeur(long currentTime) {
 		double valeurTimeFonction = currentTime-timeOfStart;
+		System.out.println("valeurTimeFonction : "+valeurTimeFonction);
 		double result;
-		if (valeurTimeFonction>=fMont.getMaxMinX()) {
+		if (valeurTimeFonction<=fMont.getMaxMinX()) {
 			result = fMont.getValue(valeurTimeFonction);
 		} else {
 			result = fDesc.getValue(valeurTimeFonction-fMont.getMaxMinX());
@@ -32,6 +33,8 @@ public class Courbe {
 				result=valeurInitial;
 			}
 		}
+		System.out.println("result : "+result);
 		return result;
+		
 	}
 }

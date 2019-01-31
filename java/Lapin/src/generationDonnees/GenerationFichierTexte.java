@@ -30,11 +30,12 @@ public class GenerationFichierTexte {
 		    Courbe courbeAdrenaline = new Courbe((long) 0.0, valeurInitial);
 			
 		
-		    for (int i = 0; i < 20000; i++) {
+		    for (int i = 0; i < 2000; i++) {
 		    	double valeurAecrire = courbeAdrenaline.getValeur(i);
 		    	fw.write (i+"\t");
 		    	fw.write ((String.valueOf (valeurAecrire)).substring(0, 10));
 		        fw.write ("\r\n");
+		        System.out.println("i : "+i+"   val :  "+valeurAecrire);
 		        
 			}
 		        
