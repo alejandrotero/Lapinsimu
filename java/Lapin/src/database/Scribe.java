@@ -169,6 +169,29 @@ public class Scribe {
 			ecrire(nomDB, valeurAecrire, currentTime);
 		}
 	}
+    
+    
+    public void genererPointPressionArterielle(long currentTime, String nomDB, Events event) {
+    	//Time in seconds
+    	currentTime=currentTime/1000;
+    	
+    	double valeurAecrire = valeurInitial;
+		if (etatCourant==null) {
+			etatCourant=Events.REPOS;
+			valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
+			valeurAecrire=valeurInitial;
+		} else {
+			if (event.equals(Events.ADRENALINE)) {
+				etatCourant=Events.ADRENALINE;
+				courbeAdrenaline = new Courbe(currentTime, valeurInitial);
+				valeurAecrire = courbeAdrenaline.getValeur(currentTime);
+			}else{
+				valeurAecrire = courbeAdrenaline.getValeur(currentTime);
+			}
+			ecrire(nomDB, valeurAecrire, currentTime);
+		}
+    	
+    }
 
 
 

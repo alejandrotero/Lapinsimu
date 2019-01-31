@@ -6,7 +6,8 @@ import java.lang.Math.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
+import graphCharacteristics.BattementCardiaque;
+import graphCharacteristics.Data;
 
 public class GenerationFichierTexte {
 	
@@ -38,6 +39,44 @@ public class GenerationFichierTexte {
 		        System.out.println("i : "+i+"   val :  "+valeurAecrire);
 		        
 			}
+		   
+		        
+		 
+		    fw.close();
+		}
+		catch (IOException exception)
+		{
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		}
+		
+		
+	}
+	
+void creationFichierTestPA() {
+		
+		File f = new File ("test.txt");
+		Data data= new Data("Data Ana/Pattern.txt");
+		BattementCardiaque pattern = new BattementCardiaque(data);
+		pattern.extractionPattern();
+		
+		 
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		    double valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
+		    System.out.println(valeurInitial);
+		    Courbe courbeAdrenaline = new Courbe((long) 0.0, valeurInitial);
+			
+		
+		    for (int i = 0; i < 2000; i++) {
+		    	double valeurAecrire = courbeAdrenaline.getValeur(i)+pattern.getY(i%(pattern.nbPointsParPattern()));
+		    	fw.write (i+"\t");
+		    	fw.write ((String.valueOf (valeurAecrire)).substring(0, 10));
+		        fw.write ("\r\n");
+		        System.out.println("i : "+i+"   val :  "+valeurAecrire);
+		        
+			}
+		   
 		        
 		 
 		    fw.close();
@@ -60,7 +99,7 @@ public class GenerationFichierTexte {
 	
 	public static void main(String[] argv) {
 		GenerationFichierTexte f1 = new GenerationFichierTexte();
-		f1.creationFichier();
+		f1.creationFichierTestPA();
 		
 		/*for (int i = 0; i < 100; i++) {
 			//FonctionQuadratique f = FonctionQuadratique.createFonctionMonteAdrenaline(FonctionQuadratique.generateNormalRandomNumber(46.59, 16.48));

@@ -15,7 +15,11 @@ public class BattementCardiaque {
 		this.data = data;
 	}
 	
-	void extractionPattern() {
+	public int nbPointsParPattern() {
+		return this.valeursY.size();
+	}
+	
+	public void extractionPattern() {
 		this.valeursX =  data.getTime();
 		this.valeursY =  data.getPressionArterielle();
 		for (int i=0; i<this.valeursX.size(); i++) {
@@ -23,6 +27,14 @@ public class BattementCardiaque {
 
 		}
 		
+	}
+	
+	public double getX(int i) {
+		return this.valeursX.get(i);
+	}
+	
+	public double getY(int i) {
+		return this.valeursY.get(i);
 	}
 	
 	double getMax() {

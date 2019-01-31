@@ -21,8 +21,8 @@ public class Courbe {
 		return fdes;
 	}
 
-	public double getValeur(long currentTime) {
-		double valeurTimeFonction = currentTime-timeOfStart;
+	public double getValeur(double i) {
+		double valeurTimeFonction = i-timeOfStart;
 		System.out.println("valeurTimeFonction : "+valeurTimeFonction);
 		double result;
 		if (valeurTimeFonction<=fMont.getMaxMinX()) {
