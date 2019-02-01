@@ -10,8 +10,16 @@ pour InfluxDB :
     -v $PWD:/var/lib/influxdb \
     influxdb
 
+pour InfluxDB :
+    docker run -p 8086:8086 \
+    influxdb
+
+
 Lancer Influx Avant Lapin!
 Je vais faire un docker-compose a un moment
 
 note:
 docker rm $(docker ps -aq)
+
+
+/home/guliver/workingD/Lapinsimu/javascript
