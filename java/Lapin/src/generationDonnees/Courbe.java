@@ -20,8 +20,12 @@ public class Courbe {
 		}
 		return fdes;
 	}
-
-	public double getValeur(double i) {
+	/**
+	 * 
+	 * @param i
+	 * @return le valeur de la courbe, null si la courbe est fini
+	 */
+	public Double getValeur(double i) {
 		double valeurTimeFonction = i-timeOfStart;
 		System.out.println("valeurTimeFonction : "+valeurTimeFonction);
 		double result;
@@ -33,7 +37,7 @@ public class Courbe {
 				result=valeurInitial;
 			}
 		}
-		System.out.println("result : "+result);
+		//System.out.println("result : "+result);
 		return result;
 		
 	}
