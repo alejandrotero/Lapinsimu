@@ -23,8 +23,8 @@ const influx = new Influx.InfluxDB({
     {
       measurement: 'pression',
       fields: {
-        value: Influx.FieldType.INTEGER,
-        timey: Influx.FieldType.INTEGER,
+        valeur: Influx.FieldType.INTEGER,
+        timey: Influx.FieldType.STRING,
       },
       tags: [
         'host'
@@ -69,10 +69,10 @@ app.get('/', function (req, res) {
   var query = url.parse(req.url,true);
 
   if  ( query.query['requestType'] == 'getdata' ) {
-    console.log("err");
 
 	  setTimeout(function () {
       //read the file of local data, only for testing
+      //*
       fs.readFile('min.txt', {encoding: 'utf-8'}, function(err,data){
         if (!err) {
           var allLines = data.split('\n');
@@ -85,7 +85,7 @@ app.get('/', function (req, res) {
           t  = t.replace(',', '.');
 
           //temps moche
-          //console.log(t)
+          console.log(t)
 
           //décalag pour ce jeux de donnée uniquement
           t  =debut+((t-6000)*1000)
@@ -95,33 +95,23 @@ app.get('/', function (req, res) {
 
           /////////////////////////////////////////////////////////
           //ecriture dans la base de donnée, uniquement pour mes test
-          influx.writePoints([
-              {
-                measurement: 'pression',
-                tags: { host: os.hostname() },
-                fields: { value: d2, timey: t2 },
-              }
-            ]);
+
             //console.log("write :"+d2)
           
           //////////////////////////////////////////////////////
           //lecture dans le DB
-          influx.query(`
-                select * from pression
-                where host = ${Influx.escape.stringLit(os.hostname())}
-                order by time desc
-                limit 1
-              `)
-            .then(rows => {
-              rows.forEach(row => { res.send({time: row.timey, int : row.value})})
-            }).catch(function (err) {
-              console.log("Promise Rejected: ", err);
-         });
+         
          console.log("durée :");
          console.log(debut -new Date().getTime());
          //console.log(row, row.value),
           ///////////////////
-
+          influx.query(` select * from pression order by time desc limit 1 `)
+          .then(rows => {
+            rows.forEach(row => {console.log("data: "+row),
+            res.send({time: row.timey, int : row.value})})
+          }).catch(function (err) {
+            console.log("Promise Rejected: ", err);
+        });
           //console.log(d3)
           //console.log(t3)
           //res.send({time: t2, int : d2})
@@ -129,7 +119,10 @@ app.get('/', function (req, res) {
         } else {
           console.log(err);
         }});
-        i++;
+ 
+        //*/
+      i++;
+
       }, 1);
   }
   /*else{

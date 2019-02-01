@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+ echo "Starting!"
+
+ docker-compose up
+java/Lapin/src/database
+
+
+javac -d bin -sourcepath src -cp lib/lib1.jar:lib/lib2.jar src/com/example/Application.java
+java -cp bin;lib/lib1.jar:lib/lib2.jar com.example.Application
+
+/home/guliver/workingD/Lapinsimu/java/Lapin/src/database/TestDB.java
+/home/guliver/workingD/Lapinsimu/java/Lapin/bin/database/TestDB.java
+
+javac -d bin -sourcepath src -cp src/database/TestDB.class
+
+
+javac TestDB.java Scribe.java

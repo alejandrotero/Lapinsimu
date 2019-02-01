@@ -77,10 +77,10 @@ function dataGenerator() {
         function mainboucle(time,valeur){   
             console.log("valeur");                 
             console.log(valeur);  
-            console.log(time);                 
+            console.log(parseInt(time));                 
                
             chart.addData(
-            { date:time, Pression: valeur }); //now.getTime()
+            { date:parseInt(time), Pression: valeur }); //now.getTime()
         }
 
         getdata(mainboucle);

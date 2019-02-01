@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "generationDonnees.Main",
+            "projectName": "Lapin"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestDB",
+            "request": "launch",
+            "mainClass": "database.TestDB",
+            "projectName": "Lapin"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - nul",
+            "request": "launch",
+            "mainClass": "database.nul",
+            "projectName": "Lapin"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ecriture",
+            "request": "launch",
+            "mainClass": "database.ecriture",
+            "projectName": "Lapin"
+        }
+    ]
+}

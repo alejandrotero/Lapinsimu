@@ -29,7 +29,6 @@ public class Main {
 			
 			//Check new events
 			Events event=demandeEvent(currentTime, nomDB2,listEvents);
-			
 			//Ecrire dans la DB
 			writter.generePoint(currentTime, nomDB1, event);
 			
