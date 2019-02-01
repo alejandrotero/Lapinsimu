@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		boolean ended=true;
 		long startingTime = System.currentTimeMillis();
-		long currentTime = System.currentTimeMillis();
+		long currentTime = System.currentTimeMillis()-startingTime;
 		long timeMax= 1000000;
 		long miliseconds=5;
 		String nomDB1="pression";

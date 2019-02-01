@@ -20,20 +20,24 @@ public class Courbe {
 		}
 		return fdes;
 	}
-
-	public double getValeur(double i) {
+	/**
+	 * 
+	 * @param i
+	 * @return le valeur de la courbe, null si la courbe est fini
+	 */
+	public Double getValeur(double i) {
 		double valeurTimeFonction = i-timeOfStart;
-		System.out.println("valeurTimeFonction : "+valeurTimeFonction);
-		double result;
+		//System.out.println("valeurTimeFonction : "+valeurTimeFonction);
+		Double result;
 		if (valeurTimeFonction<=fMont.getMaxMinX()) {
 			result = fMont.getValue(valeurTimeFonction);
 		} else {
 			result = fDesc.getValue(valeurTimeFonction-fMont.getMaxMinX());
 			if (result<=valeurInitial) {
-				result=valeurInitial;
+				result=null;
 			}
 		}
-		System.out.println("result : "+result);
+		//System.out.println("result : "+result);
 		return result;
 		
 	}
