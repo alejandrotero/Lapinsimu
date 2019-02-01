@@ -164,13 +164,15 @@ public class Scribe {
 				etatCourant=Events.REPOS;
 			}
 		} else {
-			if (event.equals(Events.ADRENALINE)) {
-				etatCourant=Events.ADRENALINE;
-				courbeAdrenaline = new Courbe(currentTime, valeurInitial);
-				valeurAecrire = courbeAdrenaline.getValeur(currentTime);
+			if (event==null) {
+				valeurAecrire=valeurInitial;
 			}
 			else{
-				valeurAecrire=valeurInitial;
+				if (event.equals(Events.ADRENALINE)) {
+					etatCourant=Events.ADRENALINE;
+					courbeAdrenaline = new Courbe(currentTime, valeurInitial);
+					valeurAecrire = courbeAdrenaline.getValeur(currentTime);
+				}
 			}
 		} 
 		ecrire(nomDB, valeurAecrire, currentTime);
