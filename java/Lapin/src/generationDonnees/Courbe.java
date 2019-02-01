@@ -27,14 +27,14 @@ public class Courbe {
 	 */
 	public Double getValeur(double i) {
 		double valeurTimeFonction = i-timeOfStart;
-		System.out.println("valeurTimeFonction : "+valeurTimeFonction);
-		double result;
+		//System.out.println("valeurTimeFonction : "+valeurTimeFonction);
+		Double result;
 		if (valeurTimeFonction<=fMont.getMaxMinX()) {
 			result = fMont.getValue(valeurTimeFonction);
 		} else {
 			result = fDesc.getValue(valeurTimeFonction-fMont.getMaxMinX());
 			if (result<=valeurInitial) {
-				result=valeurInitial;
+				result=null;
 			}
 		}
 		//System.out.println("result : "+result);

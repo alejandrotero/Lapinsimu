@@ -27,21 +27,21 @@ public class GenerationFichierTexte {
 		{
 		    FileWriter fw = new FileWriter (f);
 		    double valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
-		    System.out.println(valeurInitial);
+		    //System.out.println(valeurInitial);
 		    Courbe courbeAdrenaline = new Courbe((long) 0.0, valeurInitial);
 			
 		
 		    for (int i = 0; i < 2000; i++) {
-		    	double valeurAecrire = courbeAdrenaline.getValeur(i);
-		    	fw.write (i+"\t");
-		    	fw.write ((String.valueOf (valeurAecrire)).substring(0, 10));
-		        fw.write ("\r\n");
-		        //System.out.println("i : "+i+"   val :  "+valeurAecrire);
-		        
+		    	Double valeurAecrire = courbeAdrenaline.getValeur(i);
+		    	if (valeurAecrire!=null) {
+		    		fw.write (i+"\t");
+			    	fw.write ((String.valueOf (valeurAecrire)).substring(0, 10));
+			        fw.write ("\r\n");
+			        //System.out.println("i : "+i+"   val :  "+valeurAecrire);
+				}else {
+					break;
+				}
 			}
-		   
-		        
-		 
 		    fw.close();
 		}
 		catch (IOException exception)
