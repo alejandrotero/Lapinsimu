@@ -27,9 +27,9 @@ public class GraphCharacteristics {
 
 
 	public static void main(String[] args) {
-		/*/
-		List<EventInTheTrace> eventsInTheTrace = individualAnalyse("data/sequence5-3.txt");
-		//List<EventInTheTrace> eventsInTheTrace = multipleAnalyse("data");
+		
+		//List<EventInTheTrace> eventsInTheTrace = individualAnalyse("data/sequence5-3.txt");
+		List<EventInTheTrace> eventsInTheTrace = multipleAnalyse("data");
 		
 		for (EventInTheTrace eventInTheTrace : eventsInTheTrace) {
 			//System.out.println(eventInTheTrace.toString());
@@ -45,8 +45,8 @@ public class GraphCharacteristics {
 			eventInTheTrace.isEndedBeforeDataFinished()
 			);
 		}
-		/*/
-		generateTxtForMatlab("data/sequence4-13.txt",2596,2672);
+		
+		//generateTxtForMatlab("data/sequence4-13.txt",2596,2672);
 	}
 	
 	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {
@@ -55,7 +55,7 @@ public class GraphCharacteristics {
 		List<EventInTheTrace> eventsInTheTrace = new ArrayList<>();
 		
 		for (File F: fichiersTxt) {
-			eventsInTheTrace.addAll(individualAnalyse(F.getAbsolutePath()));
+			eventsInTheTrace.addAll(individualAnalyseFrequence((F.getAbsolutePath())));
 		}
 		return eventsInTheTrace;
 	}
@@ -113,7 +113,26 @@ public class GraphCharacteristics {
 	}
 	
 
+	private static List<EventInTheTrace> individualAnalyseFrequence(String path) {
 
+		GraphCharacteristics chara = new GraphCharacteristics();
+		Data data = new Data(path);
+		chara.setData(data);
+		double pourcentageOfChangement = 0.2;
+		List<EventInTheTrace> eventsInTheTrace = chara.getVariations(data.getTime(), data.getFrequenceCardiaque(), 10, pourcentageOfChangement);
+		boolean ended = false;
+		while (eventsInTheTrace.size()==0 && !ended) {
+			pourcentageOfChangement-=0.05;
+			if (pourcentageOfChangement<=0) {
+				ended = true;
+				System.out.println("WARNING! no events found in the dataset");
+			} else {
+				eventsInTheTrace = chara.getVariations(data.getTime(), data.getFrequenceCardiaque(), 10, pourcentageOfChangement);
+			}
+		}
+		return eventsInTheTrace;
+	}
+	
 
 	private List<EventInTheTrace> getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
 		List<EventInTheTrace> eventsInTheTrace = new ArrayList<>();

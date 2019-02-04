@@ -16,6 +16,8 @@ public class Data {
 	public List<Double> pressionArterielle;
 	public List<Double> pressionRespiratiore;
 	public  List<Double> pressionArterielleMoyenne;
+	public  List<Double> frequenceCardiaque;
+	public  List<Double> frequenceRespiratoire;
 	//Times in which the pressionArterielleMoyenne is not repeated (we have the same pressionArterielleMoyenne pour 100 values aprox)
 	public List<Double> uniqueTimes;
 	
@@ -24,6 +26,8 @@ public class Data {
 		pressionArterielle = new ArrayList<>();
 		pressionRespiratiore = new ArrayList<>();
 		pressionArterielleMoyenne = new ArrayList<>();
+		frequenceCardiaque = new ArrayList<>();
+		frequenceRespiratoire = new ArrayList<>();
 		readFile(filePath);
 	}
 	public  List<Double> getTime() {
@@ -41,6 +45,12 @@ public class Data {
 	public  List<Double> getPressionArterielleMoyenne() {
 		return pressionArterielleMoyenne;
 	}
+	public List<Double> getFrequenceCardiaque() {
+		return frequenceCardiaque;
+	}
+	public List<Double> getFrequenceRespiratoire() {
+		return frequenceRespiratoire;
+	}
 	public void readFile(String filePath) {
 		try{
 			InputStream flux=new FileInputStream(filePath); 
@@ -57,6 +67,8 @@ public class Data {
 					pressionArterielle.add(Double.parseDouble(columnDetail[1]));
 					pressionRespiratiore.add(Double.parseDouble(columnDetail[2]));
 					pressionArterielleMoyenne.add(Double.parseDouble(columnDetail[3]));
+					frequenceCardiaque.add(Double.parseDouble(columnDetail[4]));
+					frequenceRespiratoire.add(Double.parseDouble(columnDetail[5]));
 				} catch (Exception e) {
 					//System.out.println("line of the fichier txt ignored, not numeric");
 				}
