@@ -58,6 +58,13 @@ public class BattementCardiaque {
 		return this.valeurs.get(i);
 	}
 	
+	public int getPeriode() {
+		return this.periode;
+	}
+	public int getFrequenceEchantillonnage() {
+		return this.frequenceEchantillonnage;
+	}
+	
 	double getMax() {
 		double aux=this.valeursY.get(0);
 		for (int i=0; i<this.valeursX.size(); i++) {
@@ -80,19 +87,23 @@ public class BattementCardiaque {
 		return this.getMax()-this.getMin();
 	}
 	
-	void modulationPattern(double nouvellePeriode, double nouvelleAmplitude) {
+	public void modulationPattern(double nouvellePeriode, double nouvelleAmplitude) {
 		double t0=0;
 		double coefficientMultiplicateur=nouvelleAmplitude/this.getAmplitude();
 		this.valeurs=new HashMap<Integer,Double>();
+		this.frequenceEchantillonnage=(int)Math.round((nouvellePeriode/this.periode*1000));
+		//System.out.println("///////////////////////////////////"+this.frequenceEchantillonnage);
 		
 		for (int i=0; i<this.valeursX.size(); i++) {
 			double valTnX=i*nouvellePeriode/this.periode+t0;
 			this.valeursX.set(i, valTnX);
-			System.out.println(valTnX);
+			//System.out.println(valTnX);
 			double valTnY=this.valeursY.get(i)*coefficientMultiplicateur;
 			this.valeursY.set(i, valTnY);
-			this.valeurs.put((int)(1000*this.frequenceEchantillonnage*i*nouvellePeriode/this.valeursX.size()+t0), valTnY);
+			this.valeurs.put((int)(this.frequenceEchantillonnage*i+t0), valTnY);
 		}
+		
+		
 		
 		
 	}
@@ -112,6 +123,7 @@ public class BattementCardiaque {
 			    	String sX=(String.valueOf ( this.valeursX.get(i)));
 			    	String sY=(String.valueOf ( this.valeursY.get(i)));
 			    	String sXb=(String.valueOf (i*this.frequenceEchantillonnage));
+			    	System.out.println(i*this.frequenceEchantillonnage);
 			    	String sYb=(String.valueOf ( this.valeurs.get((int)i*this.frequenceEchantillonnage)));
 			    	sX=sX.replace('.', ',');
 			    	sY=sY.replace('.', ',');

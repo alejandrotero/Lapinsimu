@@ -34,7 +34,7 @@ public class Courbe {
 		} else {
 			result = fDesc.getValue(valeurTimeFonction-fMont.getMaxMinX());
 			if (result<=valeurInitial) {
-				result=null;
+				result=valeurInitial;
 			}
 		}
 		//System.out.println("result : "+result);
