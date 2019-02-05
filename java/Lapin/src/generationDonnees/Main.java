@@ -11,10 +11,10 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		boolean ended=true;
 		long startingTime = System.currentTimeMillis();
-		long currentTime = System.currentTimeMillis()-startingTime;
+		int currentTime = (int) (System.currentTimeMillis()-startingTime);
 		long timeMax= 1000000;
 		long miliseconds=5;
-		String nomDB1="pression";
+		String nomDB1="PressionA";
 		String nomDB2="event";
 		
 		Scribe writter = new Scribe();
@@ -25,7 +25,7 @@ public class Main {
 		
 		while(ended && currentTime<timeMax) {
 			//Mise a jour du temps IN MILLISECONDS
-			currentTime=System.currentTimeMillis()-startingTime;
+			currentTime=(int) (System.currentTimeMillis()-startingTime);
 			
 			//Check new events
 			Events event=demandeEvent(currentTime, nomDB2,listEvents);

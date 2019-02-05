@@ -18,7 +18,7 @@ const os = require('os')
 //*
 const influx = new Influx.InfluxDB({
   host: 'localhost',
-  database: 'express_response_db',
+  database: 'PressionA',
   schema: [
     {
       measurement: 'pression',
@@ -118,8 +118,8 @@ app.get('/', function (req, res) {
         //console.log(row, row.value),
          ///////////////////
          influx.query(` select * from pression order by time desc limit 1 `)
-         .then(rows => { console.log("t"),
-           rows.forEach(row => {console.log("data: "+row),
+         .then(rows => {
+           rows.forEach(row => {console.log("data: "+row.valeur+","+row.timey),
            res.send({time: row.timey, int : row.valeur})})
          }).catch(function (err) {
            console.log("Promise Rejected: ", err);

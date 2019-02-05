@@ -15,12 +15,12 @@ public class Scribe {
     Double valeurInitial;
     Courbe courbeAdrenaline;
 
-    public void ecrire(String nomdb, double valeurAecrire,Long time){
+    public void ecrire(String nomdb, Double valeurAecrire,int time){
         //http://localhost:8086/write?db=express_response_db' --data-binary 'pression,host=server01,timey=200 value=64'
         try{
         URL POST_URL2 = new URL("http", "localhost", 8086, "/write?db="+nomdb);
-
-        String POST_PARAMS2 = "pression,timey="+time+" valeur=13i ";
+            int a =  (int) Math.round( valeurAecrire);
+        String POST_PARAMS2 = "pression,timey="+time+" valeur="+a+"i ";
         //+ time
         //<measurement>,<tag>[,<tags>] <field>[,<field>] <timestamp>
         //String POST_PARAMS2 = "timey= "+time+", value="+valeur+", 1434055562000000000";
@@ -149,14 +149,14 @@ public class Scribe {
 
 	
     
-    public void generePoint(long currentTime, String nomDB, Events event) {
+    public void generePoint(int currentTime, String nomDB, Events event) {
     	//Time in seconds
-    	currentTime=currentTime/1000;
+    	//currentTime=currentTime/1000;
     	
     	Double valeurAecrire = valeurInitial;
 		if (etatCourant==null) {
 			etatCourant=Events.REPOS;
-			valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
+			valeurInitial =  FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
 			valeurAecrire=valeurInitial;
 		} else if (etatCourant.equals(Events.ADRENALINE)) {
 			valeurAecrire = courbeAdrenaline.getValeur(currentTime);
@@ -174,12 +174,15 @@ public class Scribe {
 					valeurAecrire = courbeAdrenaline.getValeur(currentTime);
 				}
 			}
-		} 
+        } 
+        System.out.println("val "+valeurAecrire);
+        System.out.println("tem "+currentTime);
+
 		ecrire(nomDB, valeurAecrire, currentTime);
 	}
     
     //no esta actualizada
-    public void genererPointPressionArterielle(long currentTime, String nomDB, Events event) {
+    public void genererPointPressionArterielle(int currentTime, String nomDB, Events event) {
     	//Time in seconds
     	currentTime=currentTime/1000;
     	

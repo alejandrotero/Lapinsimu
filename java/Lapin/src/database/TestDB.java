@@ -13,19 +13,19 @@ bisous a tous
 */
     public static void main(String[] args) {
 
-        long date = System.currentTimeMillis();
+        int date = (int) System.currentTimeMillis();
 
         Scribe e = new Scribe();
         System.out.println("creation");
-        e.creerDB("express_response_db");
+        //e.creerDB("PressionA");
         System.out.println("");
-        Integer a = 11;
+        Double a = 11.00;
         System.out.println("ecriture");
-        e.ecrire("express_response_db", a, date);
+        e.ecrire("PressionA", a, date);
         System.out.println("");
 
         System.out.println("lecture");
-        System.out.println(e.lire("express_response_db"));
+        System.out.println(e.lire("PressionA"));
 
 
 

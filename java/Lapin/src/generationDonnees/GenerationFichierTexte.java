@@ -28,7 +28,7 @@ public class GenerationFichierTexte {
 		    FileWriter fw = new FileWriter (f);
 		    double valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
 		    //System.out.println(valeurInitial);
-		    Courbe courbeAdrenaline = new Courbe((long) 0.0, valeurInitial);
+		    Courbe courbeAdrenaline = new Courbe((int) 0.0, valeurInitial);
 			
 		
 		    for (int i = 0; i < 2000; i++) {
@@ -65,7 +65,7 @@ void creationFichierTestPA() {
 		    FileWriter fw = new FileWriter (f);
 		    double valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
 		    System.out.println(valeurInitial);
-		    Courbe courbeAdrenaline = new Courbe((long) 0.0, valeurInitial);
+		    Courbe courbeAdrenaline = new Courbe((int) 0.0, valeurInitial);
 		    //int frequenceEchantillonnage = Math.max(1, pattern.getFrequenceEchantillonnage());
 		    int T1=420;
 		    int T2=3; // nouvelle periode voulue
