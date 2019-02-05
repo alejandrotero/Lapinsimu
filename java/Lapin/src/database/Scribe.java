@@ -162,6 +162,8 @@ public class Scribe {
 			valeurAecrire = courbeAdrenaline.getValeur(currentTime);
 			if (valeurAecrire==null) {
 				etatCourant=Events.REPOS;
+				valeurInitial = courbeAdrenaline.valeurFinal;
+				valeurAecrire=valeurInitial;
 			}
 		} else {
 			if (event==null) {
