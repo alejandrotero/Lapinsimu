@@ -46,7 +46,7 @@ public class GraphCharacteristics {
 			);
 		}
 		
-		//generateTxtForMatlab("data/sequence4-13.txt",2596,2672);
+		//generateTxtForMatlabFreq("data/sequence4-13.txt",2596,2672);
 	}
 	
 	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {
@@ -92,7 +92,7 @@ public class GraphCharacteristics {
 		}
 	}
 	
-	private static void generateTxtForMatlab(String path,double firstTime,double endingTime) {
+	private static void generateTxtForMatlabFreq(String path,double firstTime,double endingTime) {
 		GraphCharacteristics chara = new GraphCharacteristics();
 		Data data = new Data(path);
 		chara.setData(data);
