@@ -60,7 +60,7 @@ public class GraphCharacteristics {
 		return eventsInTheTrace;
 	}
 
-	private static void generateTxtForMatlab(String path,double firstTime,double endingTime) {
+	private static void generateTxtForMatlabPA(String path,double firstTime,double endingTime) {
 		GraphCharacteristics chara = new GraphCharacteristics();
 		Data data = new Data(path);
 		chara.setData(data);
@@ -78,6 +78,37 @@ public class GraphCharacteristics {
 				}
 		    	if (data.getUniqueTimes().get(i)>=firstTime&&data.getUniqueTimes().get(i)<endingTime) {
 		    		fw.write (data.getUniqueTimes().get(i)-realTime+","+data.getPressionArterielleMoyenne().get(i));
+			        fw.write ("\n");
+				}
+		       
+		    }
+		 
+		    fw.close();
+		    System.out.println("Fichier created");
+		}
+		catch (IOException exception)
+		{
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		}
+	}
+	
+	private static void generateTxtForMatlab(String path,double firstTime,double endingTime) {
+		GraphCharacteristics chara = new GraphCharacteristics();
+		Data data = new Data(path);
+		chara.setData(data);
+		File f = new File (data.nomFicher);
+		
+		 
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		    double realTime = -1;
+		    for (int i = 0; i < data.frequenceCardiaque.size(); i++) {
+		    	if (data.getTime().get(i)>=firstTime&& realTime==-1) {
+					realTime = data.getTime().get(i);
+				}
+		    	if (data.getTime().get(i)>=firstTime&&data.getTime().get(i)<endingTime) {
+		    		fw.write (data.getTime().get(i)-realTime+","+data.getFrequenceCardiaque().get(i));
 			        fw.write ("\n");
 				}
 		       
