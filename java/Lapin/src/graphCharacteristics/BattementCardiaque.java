@@ -11,15 +11,19 @@ public class BattementCardiaque {
 	public Data data;
 	List<Double> valeursX ;
 	List<Double> valeursY ;
-	HashMap<Double,Double> valeurs;
-	double frequenceEchantillonnage;
+	HashMap<Integer,Double> valeurs;
+	int frequenceEchantillonnage;
+	int periode;
 	
 	public BattementCardiaque(Data data) {
 		this.data = data;
-		this.valeurs=new HashMap<Double,Double>();
+		this.valeurs=new HashMap<Integer,Double>();
 		this.valeursX =  data.getTime();
 		this.valeursY =  data.getPressionArterielle();
-		this.frequenceEchantillonnage=this.valeursX.get(1)-this.valeursX.get(0);
+		this.frequenceEchantillonnage=(int)Math.round((this.valeursX.get(1)-this.valeursX.get(0))*1000);
+		this.periode=(int)(Math.round((this.valeursX.get(this.valeursX.size()-1)-this.valeursX.get(0))*1000));
+		System.out.println(this.frequenceEchantillonnage);
+		
 		
 	}
 	
@@ -32,10 +36,11 @@ public class BattementCardiaque {
 		double timeDebut= this.valeursX.get(0);
 		for (int i=0; i<this.valeursY.size(); i++) {
 			this.valeursY.set(i, valeursY.get(i)-48) ;
-			this.valeurs.put(this.valeursX.get(i)-timeDebut, this.valeursY.get(i));
+			int valI=(int)(Math.round((this.valeursX.get(i)-timeDebut)*1000));
+			this.valeurs.put(valI, this.valeursY.get(i));
 
 		}
-		//System.out.println(this.valeurs);
+		System.out.println(this.valeurs);
 		//System.out.println(this.frequenceEchantillonnage);
 		
 	}
@@ -51,6 +56,13 @@ public class BattementCardiaque {
 	
 	public double getY(double i) {
 		return this.valeurs.get(i);
+	}
+	
+	public int getPeriode() {
+		return this.periode;
+	}
+	public int getFrequenceEchantillonnage() {
+		return this.frequenceEchantillonnage;
 	}
 	
 	double getMax() {
@@ -75,18 +87,23 @@ public class BattementCardiaque {
 		return this.getMax()-this.getMin();
 	}
 	
-	void modulationPattern(double periode, double nouvelleAmplitude) {
-		double t0=this.valeursX.get(0);
+	public void modulationPattern(double nouvellePeriode, double nouvelleAmplitude) {
+		double t0=0;
 		double coefficientMultiplicateur=nouvelleAmplitude/this.getAmplitude();
-		this.valeurs=new HashMap<Double,Double>();
+		this.valeurs=new HashMap<Integer,Double>();
+		this.frequenceEchantillonnage=(int)Math.round((nouvellePeriode/this.periode*1000));
+		//System.out.println("///////////////////////////////////"+this.frequenceEchantillonnage);
 		
 		for (int i=0; i<this.valeursX.size(); i++) {
-			double valTnX=i*periode/this.valeursX.size()+t0;
+			double valTnX=i*nouvellePeriode/this.periode+t0;
 			this.valeursX.set(i, valTnX);
+			//System.out.println(valTnX);
 			double valTnY=this.valeursY.get(i)*coefficientMultiplicateur;
 			this.valeursY.set(i, valTnY);
-			this.valeurs.put(this.frequenceEchantillonnage*i*periode/this.valeursX.size()+t0, valTnY);
+			this.valeurs.put((int)(this.frequenceEchantillonnage*i+t0), valTnY);
 		}
+		
+		
 		
 		
 	}
@@ -105,10 +122,18 @@ public class BattementCardiaque {
 			    {
 			    	String sX=(String.valueOf ( this.valeursX.get(i)));
 			    	String sY=(String.valueOf ( this.valeursY.get(i)));
+			    	String sXb=(String.valueOf (i*this.frequenceEchantillonnage));
+			    	System.out.println(i*this.frequenceEchantillonnage);
+			    	String sYb=(String.valueOf ( this.valeurs.get((int)i*this.frequenceEchantillonnage)));
 			    	sX=sX.replace('.', ',');
 			    	sY=sY.replace('.', ',');
+			    	sXb=sXb.replace('.', ',');
+			    	//System.out.println(sXb);
+			    	sYb=sYb.replace('.', ',');
 			    	fw.write (sX+"\t");
-			    	fw.write (sY);
+			    	fw.write (sY+"\t");
+			    	fw.write (sXb+"\t");
+			    	fw.write (sYb);
 			        fw.write ("\r\n");
 			        
 			    }
