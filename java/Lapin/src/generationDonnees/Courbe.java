@@ -10,9 +10,16 @@ public class Courbe {
 	public Courbe(int timeOfStart, Double valeurInitial) {
 		this.timeOfStart = timeOfStart;
 		this.valeurInitial = valeurInitial;
-		this.fMont = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
+		this.fMont = createFonctionMonte(valeurInitial);
 		this.fDesc = createFonctionDescend(fMont);
 		this.valeurFinal = generateValeurFinal(valeurInitial);
+	}
+	private FonctionQuadratique createFonctionMonte(Double valeurInitial) {
+		FonctionQuadratique fmon = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
+		while (fmon.getMaxMinY()>130) {
+			fmon = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
+		}
+		return fmon;
 	}
 	/**
 	 * Returns the new finishing value of the function including a variation given by the data
