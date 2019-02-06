@@ -155,37 +155,55 @@ public class Scribe {
     	
     	Double valeurAecrire = valeurInitial;
 		if (etatCourant==null) {
-			//System.out.println("comenzo");
 			etatCourant=Events.REPOS;
 			valeurInitial =  FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
 			valeurAecrire=valeurInitial;
 		} else if (etatCourant.equals(Events.ADRENALINE)) {
 			valeurAecrire = courbeAdrenaline.getValeur(currentTime);
-			//System.out.println("adre");
 			if (valeurAecrire==null) {
 				etatCourant=Events.REPOS;
 				valeurInitial = courbeAdrenaline.valeurFinal;
 				valeurAecrire=valeurInitial;
-				//System.out.println("termino adre");
 			}
 		} else {
 			if (event==null) {
 				valeurAecrire=valeurInitial;
-			} else {
+			}
+			else{
 				if (event.equals(Events.ADRENALINE)) {
 					etatCourant=Events.ADRENALINE;
 					courbeAdrenaline = new Courbe(currentTime, valeurInitial);
 					valeurAecrire = courbeAdrenaline.getValeur(currentTime);
-					//System.out.println("comenzo adre");
 				}
 			}
-			
         } 
-        System.out.println("val "+valeurAecrire+", tem "+currentTime);
+        System.out.println("val "+valeurAecrire);
+        System.out.println("tem "+currentTime);
 
-		//ecrire(nomDB, valeurAecrire, currentTime);
+		ecrire(nomDB, valeurAecrire, currentTime);
 	}
     
+    //no esta actualizada
+    public void genererPointPressionArterielle(int currentTime, String nomDB, Events event) {
+    	//Time in seconds
+    	currentTime=currentTime/1000;
+    	
+    	double valeurAecrire = valeurInitial;
+		if (etatCourant==null) {
+			etatCourant=Events.REPOS;
+			valeurInitial = FonctionQuadratique.generateNormalRandomNumber(43.59, 19.48);
+			valeurAecrire=valeurInitial;
+		} else {
+			if (event.equals(Events.ADRENALINE)) {
+				etatCourant=Events.ADRENALINE;
+				courbeAdrenaline = new Courbe(currentTime, valeurInitial);
+				valeurAecrire = courbeAdrenaline.getValeur(currentTime);
+			}else{
+				valeurAecrire = courbeAdrenaline.getValeur(currentTime);
+			}
+		}
+		ecrire(nomDB, valeurAecrire, currentTime);
+    }
 
 
 
