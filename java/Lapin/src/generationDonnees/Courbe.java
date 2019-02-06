@@ -3,11 +3,11 @@ package generationDonnees;
 public class Courbe {
 	public FonctionQuadratique fMont;
     public FonctionQuadratique fDesc;
-    public Long timeOfStart;
+    public int timeOfStart;
     public Double valeurInitial;
     public Double valeurFinal;
     
-	public Courbe(Long timeOfStart, Double valeurInitial) {
+	public Courbe(int timeOfStart, Double valeurInitial) {
 		this.timeOfStart = timeOfStart;
 		this.valeurInitial = valeurInitial;
 		this.fMont = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
