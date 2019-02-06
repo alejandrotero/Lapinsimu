@@ -31,6 +31,7 @@ public class Courbe {
 		while (valeurInitial+delta<0) {
 			delta = FonctionQuadratique.generateNormalRandomNumber(-12.03, 12.75);
 		}
+		//System.out.println("delta pour finir"+(valeurInitial+delta));
 		return valeurInitial+delta;
 	}
 
@@ -43,19 +44,22 @@ public class Courbe {
 	}
 	/**
 	 * 
-	 * @param i
+	 * @param i en miliseconds
 	 * @return le valeur de la courbe, null si la courbe est fini
 	 */
 	public Double getValeur(double i) {
-		double valeurTimeFonction = i-timeOfStart;
+		double valeurTimeFonction = (i-timeOfStart)/1000;
 		//System.out.println("valeurTimeFonction : "+valeurTimeFonction);
 		Double result;
 		if (valeurTimeFonction<=fMont.getMaxMinX()) {
+			//System.out.println("mont");
 			result = fMont.getValue(valeurTimeFonction);
 		} else {
+			//System.out.println("desc");
 			result = fDesc.getValue(valeurTimeFonction-fMont.getMaxMinX());
 			if (result<=valeurFinal) {
-				result=valeurFinal;
+				result=null;
+				//System.out.println("fini");
 			}
 		}
 		//System.out.println("result : "+result);
