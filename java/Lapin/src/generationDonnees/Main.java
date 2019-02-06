@@ -38,7 +38,7 @@ public class Main {
 	}
 	
 	
-	private static Events demandeEvent(long currentTime, String nomDB2, List<Events> listEvents) {
+	public static Events demandeEvent(long currentTime, String nomDB2, List<Events> listEvents) {
 		Events reponse = null;
 		if (currentTime>10000) {
 			if (listEvents.size()==0) {
