@@ -12,7 +12,9 @@ public class Scribe {
     private static HttpURLConnection client;
     URL input;
     Events etatCourant = null;
+    //Valeur initial de la pression arterielle moyenne
     Double valeurInitial;
+    //Courbe qui represente la reaction de la PA moyenne aprés l'injection de l'adrenaline
     Courbe courbeAdrenaline;
 
     public void ecrire(String nomdb, Double valeurAecrire,int time){
@@ -148,11 +150,14 @@ public class Scribe {
     }
 
 	
-    
+    /**
+     * Fonction qui return le valeur de la PA moyenne dans un instant (currentTime) donné
+     * @param currentTime time de l'event in milliseconds
+     * @param nomDB où on veut écrire le valeur
+     * @param event object qui represent si le lapin a eu une injection
+     */
     public void generePoint(int currentTime, String nomDB, Events event) {
-    	//Time in seconds
-    	//currentTime=currentTime/1000;
-    	
+    	//Time in milliseconds
     	Double valeurAecrire = valeurInitial;
 		if (etatCourant==null) {
 			//System.out.println("comenzo");

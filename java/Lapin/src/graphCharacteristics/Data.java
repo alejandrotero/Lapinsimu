@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Class pour lire les donnnes generes par LabChart
+ *
+ */
 public class Data {
 	public String nomFicher;
 	public String getNomFicher() {

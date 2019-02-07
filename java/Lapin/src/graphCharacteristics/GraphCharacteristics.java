@@ -14,8 +14,11 @@ public class GraphCharacteristics {
 		this.data = data;
 	}
 
-
-
+	/**
+	 * 
+	 * @param points
+	 * @return la moyenne des points dans la list donné
+	 */
 	public double getMoyenne(List<Double> points) {
 	 double result=0;
 	 for (double element : points) {
@@ -23,8 +26,6 @@ public class GraphCharacteristics {
 	}
 	 return result/points.size();
 	}
-
-
 
 	public static void main(String[] args) {
 		
@@ -48,7 +49,11 @@ public class GraphCharacteristics {
 		
 		//generateTxtForMatlabFreq("data/sequence4-13.txt",2596,2672);
 	}
-	
+	/**
+	 * 
+	 * @param folderPath où les fichiers avec les courbes a analyser sont
+	 * @return un list avec tous les events des differents courbes
+	 */
 	private static List<EventInTheTrace> multipleAnalyse(String folderPath) {
 		File rep = new File(folderPath);
 		File[] fichiersTxt = rep.listFiles();
@@ -59,7 +64,12 @@ public class GraphCharacteristics {
 		}
 		return eventsInTheTrace;
 	}
-
+	/**
+	 * Genere un fichier txt avec le temps et la PA moyenne dans un format qui matlab peut lire et faire des regressions
+	 * @param path
+	 * @param firstTime
+	 * @param endingTime
+	 */
 	private static void generateTxtForMatlabPA(String path,double firstTime,double endingTime) {
 		GraphCharacteristics chara = new GraphCharacteristics();
 		Data data = new Data(path);
@@ -91,7 +101,12 @@ public class GraphCharacteristics {
 		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 		}
 	}
-	
+	/**
+	 * Genere un fichier txt avec le temps et la frequence cardiaque dans un format qui matlab peut lire et faire des regressions
+	 * @param path
+	 * @param firstTime
+	 * @param endingTime
+	 */
 	private static void generateTxtForMatlabFreq(String path,double firstTime,double endingTime) {
 		GraphCharacteristics chara = new GraphCharacteristics();
 		Data data = new Data(path);
@@ -122,7 +137,11 @@ public class GraphCharacteristics {
 		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 		}
 	}
-
+	/**
+	 * 
+	 * @param path où les donnés de la courbe sont
+	 * @return une list avec tous les events de la courbe de la PA moyenne
+	 */
 	private static List<EventInTheTrace> individualAnalyse(String path) {
 		GraphCharacteristics chara = new GraphCharacteristics();
 		Data data = new Data(path);
@@ -143,7 +162,11 @@ public class GraphCharacteristics {
 		return eventsInTheTrace;
 	}
 	
-
+	/**
+	 * 
+	 * @param path où les donnés de la courbe sont
+	 * @return une list avec tous les events de la courbe de la frequence cardiaque
+	 */
 	private static List<EventInTheTrace> individualAnalyseFrequence(String path) {
 
 		GraphCharacteristics chara = new GraphCharacteristics();
@@ -164,7 +187,14 @@ public class GraphCharacteristics {
 		return eventsInTheTrace;
 	}
 	
-
+	/**
+	 * 
+	 * @param listTimes
+	 * @param listValues
+	 * @param parameterKMoyenne we check the average of parameterKMoyenne values to check if there is a variation
+	 * @param porcentageToChange if the variation of the value and the KMoyenne is bigger than this porcentage we have a variation
+	 * @return the listOfEvents (variations) on the given data
+	 */
 	private List<EventInTheTrace> getVariations(List<Double> listTimes,List<Double> listValues, int parameterKMoyenne, double porcentageToChange) {
 		List<EventInTheTrace> eventsInTheTrace = new ArrayList<>();
 		//Special case for initialization

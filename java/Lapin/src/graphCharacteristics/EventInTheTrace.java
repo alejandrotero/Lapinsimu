@@ -1,5 +1,8 @@
 package graphCharacteristics;
-
+/**
+ * Class pour identifier les characteristiques principales de une courbe donnée
+ *
+ */
 public class EventInTheTrace {
 	//true if peak, false if valley
 	private boolean peak;
@@ -15,6 +18,7 @@ public class EventInTheTrace {
 	private double extremePointValue;
 	private double endingTime;
 	private double endingTimeValue;
+	//Une courbe peut avoir plusieurs events, alors index dit le nombre de l'event courant dans la courbe
 	private int index;
 	public String nomFicher;
 	//True if this event finished before the data finished, false if not
@@ -65,6 +69,16 @@ public class EventInTheTrace {
 	public double getEndingTimeValue() {
 		return endingTimeValue;
 	}
+	/**
+	 * Constructeur
+	 * @param startingTime
+	 * @param startingTimeValue
+	 * @param timeOfExtremePoint
+	 * @param extremePointValue
+	 * @param endingTime
+	 * @param endingTimeValue
+	 * @param peak
+	 */
 	public EventInTheTrace(double startingTime, double startingTimeValue, double timeOfExtremePoint,
 			double extremePointValue, double endingTime, double endingTimeValue, boolean peak) {
 		this.startingTime = startingTime;
@@ -75,6 +89,13 @@ public class EventInTheTrace {
 		this.endingTimeValue = endingTimeValue;
 		this.peak = peak;
 	}
+	/**
+	 * Constructeur
+	 * @param index
+	 * @param nomFicher
+	 * @param firstTimeinDB
+	 * @param firstValueinDB
+	 */
 	public EventInTheTrace(int index,String nomFicher,double firstTimeinDB,double firstValueinDB) {
 		this.index=index;
 		endedBeforeDataFinished=true;
@@ -92,6 +113,11 @@ public class EventInTheTrace {
 				 ", \n peak=" + peak+" ,completeData=" + endedBeforeDataFinished +
 				 ", \n nomFicher=" + nomFicher+" ]";
 	}
+	/**
+	 * 
+	 * @param timeInSeconds
+	 * @return the time in a format mm:ss
+	 */
 	private static String getStringTime(double timeInSeconds) {
 		String result = timeInSeconds + " seconds ( ";
 		int minutes = (int)(timeInSeconds/60);

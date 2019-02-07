@@ -1,12 +1,22 @@
 package generationDonnees;
 
 public class Courbe {
+	//Fonction quadratique qui represent la monté de la courbe
 	public FonctionQuadratique fMont;
+	//Fonction quadratique qui represent la descend de la courbe
     public FonctionQuadratique fDesc;
+    //Temps initial de la courbe, par exemple si la courbe represent l'adrenaline ce valeur serait le temps ou le lapin a eu l'injection
     public int timeOfStart;
+    //Valeur initial de la courbe
     public Double valeurInitial;
+    //Valeur final de la courbe, quand elle return a un valeur normal
     public Double valeurFinal;
     
+    /**
+     * Constructeur de un nouvel courbe d'adrenaline
+     * @param timeOfStart
+     * @param valeurInitial
+     */
 	public Courbe(int timeOfStart, Double valeurInitial) {
 		this.timeOfStart = timeOfStart;
 		this.valeurInitial = valeurInitial;
@@ -14,6 +24,11 @@ public class Courbe {
 		this.fDesc = createFonctionDescend(fMont);
 		this.valeurFinal = generateValeurFinal(valeurInitial);
 	}
+	/**
+	 * Fonction qui return une nouvelle fonction de monte qui commence en valeur initial
+	 * @param valeurInitial
+	 * @return
+	 */
 	private FonctionQuadratique createFonctionMonte(Double valeurInitial) {
 		FonctionQuadratique fmon = FonctionQuadratique.createFonctionMonteAdrenaline(valeurInitial);
 		while (fmon.getMaxMinY()>130) {
@@ -34,7 +49,11 @@ public class Courbe {
 		//System.out.println("delta pour finir"+(valeurInitial+delta));
 		return valeurInitial+delta;
 	}
-
+	/**
+	 * Fonction qui return une nouvelle fonction de descend qui commence dans le max valeur de la fonction de monte
+	 * @param fMont
+	 * @return
+	 */
 	private FonctionQuadratique createFonctionDescend(FonctionQuadratique fMont) {
 		FonctionQuadratique fdes = FonctionQuadratique.createFonctionDescendAdrenaline(fMont.getMaxMinY());
 		while (fdes.getMaxMinY()>valeurInitial) {
@@ -64,6 +83,5 @@ public class Courbe {
 		}
 		//System.out.println("result : "+result);
 		return result;
-		
 	}
 }
