@@ -16,9 +16,7 @@ for i = 1:degree
     polyFeatures=[polyFeatures;strcat('X1^',num2str(i))];
     %out(:, end+1) = (exp(X1.^(i)));
 end
-%out(:, end+1) = (log(X1));
-%out(:, end+1) = (exp(X1));
-%out(:, end+1) = (sin(X1));
+%Adds the differents roots to the regression if wanted
 for j = 2:0
         out(:, end+1) = X1.^(1/j);
         polyFeatures=[polyFeatures;strcat('X1^1/',num2str(j))];

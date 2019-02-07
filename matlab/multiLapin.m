@@ -1,4 +1,6 @@
 function out = multiLapin(filePath)
+%Funtion that returns the coefs of multiple polynomial regressions of the data in the folder in filePath
+
 close all; 
 list_dir=dir(strcat(filePath,'/*.txt'));
 

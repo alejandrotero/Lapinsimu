@@ -1,6 +1,5 @@
 function [out, polyFeatures] = lapin(filePath)
-%clear ; close all; clc
-%fprintf('Loading data ...\n');
+%Funtion that returns the coefs of a polynomial regression of the data in filePath
 
 %% Load Data
 data = load(filePath);
