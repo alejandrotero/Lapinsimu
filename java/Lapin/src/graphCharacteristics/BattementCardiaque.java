@@ -123,7 +123,7 @@ public class BattementCardiaque {
 			    	String sX=(String.valueOf ( this.valeursX.get(i)));
 			    	String sY=(String.valueOf ( this.valeursY.get(i)));
 			    	String sXb=(String.valueOf (i*this.frequenceEchantillonnage));
-			    	System.out.println(i*this.frequenceEchantillonnage);
+			    	//System.out.println(i*this.frequenceEchantillonnage);
 			    	String sYb=(String.valueOf ( this.valeurs.get((int)i*this.frequenceEchantillonnage)));
 			    	sX=sX.replace('.', ',');
 			    	sY=sY.replace('.', ',');
