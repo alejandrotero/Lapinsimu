@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import database.Scribe;
+
 /**
  * Class principal du projet
- *
- */
+ **/
 public class Main {
 	
 	/**
@@ -19,7 +19,7 @@ public class Main {
 		boolean ended=true;
 		long startingTime = System.currentTimeMillis();
 		int currentTime = (int) (System.currentTimeMillis()-startingTime);
-		//Temps max pour la simulation, aprés ce temps la le program arretera sa execution
+		//Temps max pour la simulation, aprï¿½s ce temps la le program arretera sa execution
 		long timeMax= 1000000;
 		//On va a generer des donnes pour les courbes chaque stepInMiliseconds
 		long stepInMiliseconds=5;

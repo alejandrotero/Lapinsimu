@@ -14,7 +14,7 @@ public class Scribe {
     Events etatCourant = null;
     //Valeur initial de la pression arterielle moyenne
     Double valeurInitial;
-    //Courbe qui represente la reaction de la PA moyenne aprés l'injection de l'adrenaline
+    //Courbe qui represente la reaction de la PA moyenne aprï¿½s l'injection de l'adrenaline
     Courbe courbeAdrenaline;
 
     public void ecrire(String nomdb, Double valeurAecrire,int time){
@@ -151,9 +151,9 @@ public class Scribe {
 
 	
     /**
-     * Fonction qui return le valeur de la PA moyenne dans un instant (currentTime) donné
+     * Fonction qui return le valeur de la PA moyenne dans un instant (currentTime) donnï¿½
      * @param currentTime time de l'event in milliseconds
-     * @param nomDB où on veut écrire le valeur
+     * @param nomDB oï¿½ on veut ï¿½crire le valeur
      * @param event object qui represent si le lapin a eu une injection
      */
     public void generePoint(int currentTime, String nomDB, Events event) {
@@ -188,7 +188,7 @@ public class Scribe {
         } 
         System.out.println("val "+valeurAecrire+", tem "+currentTime);
 
-		//ecrire(nomDB, valeurAecrire, currentTime);
+		ecrire(nomDB, valeurAecrire, currentTime);
 	}
     
 

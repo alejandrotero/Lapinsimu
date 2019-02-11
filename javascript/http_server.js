@@ -30,9 +30,24 @@ const influx = new Influx.InfluxDB({
         'host'
       ]
     }
-  ]
+  ],
 })
 
+/*
+database: 'event',
+  schema: [
+    {
+      measurement: 'event',
+      fields: {
+        valeur: Influx.FieldType.INTEGER,
+        timey: Influx.FieldType.STRING,
+      },
+      tags: [
+        'host'
+      ]
+    }
+  ]
+*/
 
 influx.getDatabaseNames()
 .then(names => {
