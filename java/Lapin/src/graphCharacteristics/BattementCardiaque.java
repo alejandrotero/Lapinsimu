@@ -31,6 +31,7 @@ public class BattementCardiaque {
 		return this.valeursY.size();
 	}
 	
+	// permet de recuperer les donnees du motif de battement de coeur
 	public void extractionPattern() {
 		
 		double timeDebut= this.valeursX.get(0);
@@ -87,6 +88,8 @@ public class BattementCardiaque {
 		return this.getMax()-this.getMin();
 	}
 	
+	
+	// permet de moduler le motif en periode et amplitude
 	public void modulationPattern(double nouvellePeriode, double nouvelleAmplitude) {
 		double t0=0;
 		double coefficientMultiplicateur=nouvelleAmplitude/this.getAmplitude();
@@ -108,6 +111,7 @@ public class BattementCardiaque {
 		
 	}
 	
+	// permet de creer un fichier texte lisible par Labchart pour tester les fonctions precedentes
 	void creationFichier1Battement(String nomFichier) {
 			
 			File f = new File (nomFichier);

@@ -14,9 +14,9 @@ public class traitement_donnee {
 	public static void Echantillione(String filePath, String filePathW, double FE, double FEB) throws IOException {
 		
 		// ceci est une modif
-		/* yo les nazes, alors cette classe est censé réunir tous les fonctions permettant le traitement des données
-		 * la fonction traitement_dossier va modifier la fréquence d'échantillonage de tous les fichiers dans un dossier donné
-		 * elle va aussi découper ces fichiers en plusieurs partie correspondant au injections 
+		/* cette classe est censï¿½ rï¿½unir tous les fonctions permettant le traitement des donnï¿½es
+		 * la fonction traitement_dossier va modifier la frï¿½quence d'ï¿½chantillonage de tous les fichiers dans un dossier donnï¿½
+		 * elle va aussi dï¿½couper ces fichiers en plusieurs partie correspondant au injections 
 		 * 
 		 */
 		
