@@ -18,7 +18,7 @@ ou 2:
     docker run -p 8086:8086 \
     influxdb
 
-la différence est ue dans le premier cas les donnée sont sauvegardées, utile en prod pas en test.
+la différence est que dans le premier cas les donnée sont sauvegardées, utile en prod pas en test.
 
 Lancer Influx Avant Lapin!
 

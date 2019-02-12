@@ -17,7 +17,7 @@ bisous a tous
 
         Scribe e = new Scribe();
         System.out.println("creation");
-        //e.creerDB("PressionA");
+        e.creerDB("PressionA");
         System.out.println("");
         Double a = 11.00;
         System.out.println("ecriture");
@@ -27,8 +27,9 @@ bisous a tous
         System.out.println("lecture");
         System.out.println(e.lire("PressionA"));
 
-
-
         System.out.println("fin");
+
+        //http://localhost:8086/query?db=PressionA&q=SELECT * FROM pression order by time desc limit 1
+        //http://localhost:8086/write?db=PressionA&pression,host=server01,timey=200 valeur=64
     }
 }

@@ -90,5 +90,32 @@ function dataGenerator() {
     }, timeout);
 }
 
-      // start the data generator
-      dataGenerator();
+
+function injectionA(){
+    console.log("fct adrenaline");                 
+
+    var http = new XMLHttpRequest();
+    var url = 'localhost:8086';
+    var params = 'write?db=eventA&event,nom=adrenaline timey=10';
+    http.open('POST', url, true);
+
+    //Send the proper header information along with the request
+    //http.setRequestHeader('data-binary', 'application/x-www-form-urlencoded');//?
+    
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        console.log("adrenaline2");
+        console.log(http.readyState);
+        console.log(http.status);
+
+        if(http.readyState == XMLHttpRequest.DONE && http.status == 204) {
+            //alert(http.responseText);
+            console.log("adrenaline");
+
+        }
+    }
+    http.send(params);
+}
+
+// start the data generator
+
+dataGenerator();

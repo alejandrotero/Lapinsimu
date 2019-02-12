@@ -25,6 +25,24 @@ const influx = new Influx.InfluxDB({
       fields: {
         valeur: Influx.FieldType.INTEGER,
         timey: Influx.FieldType.STRING,
+        frequenceR=Influx.FieldType.INTEGER,
+        urine=Influx.FieldType.INTEGER
+      },
+      tags: [
+        'host'
+      ]
+    }
+  ],
+})
+const influx2 = new Influx.InfluxDB({
+  host: 'localhost',
+  database: 'event',
+  schema: [
+    {
+      measurement: 'event',
+      fields: {
+        valeur: Influx.FieldType.STRING,
+        timey: Influx.FieldType.STRING,
       },
       tags: [
         'host'
@@ -127,12 +145,12 @@ app.get('/', function (req, res) {
         }});
         //*/
         //////////////////////////////////////////////////////
-        //lecture dans le DB
+        //lecture dans la DB
         console.log("durée :");
         console.log(debut -new Date().getTime());
         //console.log(row, row.value),
          ///////////////////
-         influx.query(` select * from pression order by time desc limit 1 `)
+         influx.query(` select valeur timey from pression order by time desc limit 1 `)
          .then(rows => {
            rows.forEach(row => {console.log("data: "+row.valeur+","+row.timey),
            res.send({time: row.timey, int : row.valeur})})
@@ -141,7 +159,23 @@ app.get('/', function (req, res) {
        });
         //////////////////////////////
 
-
+        influx2.writePoints([
+          {
+            measurement: 'event',
+            fields: { valeur: "isAlived", timey: "0" },
+          }
+        ]);
+        /*
+        console.log("et donc?")
+        influx2.query(` select * from event order by time desc limit 1 `)
+         .then(rows => {
+           rows.forEach(row => {console.log("data: "+row.valeur+","+row.timey)//,
+           //res.send({time: row.timey, int : row.valeur})
+          })
+         }).catch(function (err) {
+           console.log("Promise Rejected: ", err);
+       });
+       */
       i++;
     }, 5);
   }

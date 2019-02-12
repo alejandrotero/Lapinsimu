@@ -18,14 +18,15 @@ public class Scribe {
     Courbe courbeAdrenaline;
 
     public void ecrire(String nomdb, Double valeurAecrire,int time){
-        //http://localhost:8086/write?db=express_response_db' --data-binary 'pression,host=server01,timey=200 value=64'
+        //http://localhost:8086/write?db=express_response_db' --data-binary 'pression,host=server01,timey=200 valeur=64'
         try{
         URL POST_URL2 = new URL("http", "localhost", 8086, "/write?db="+nomdb);
             int a =  (int) Math.round( valeurAecrire);
-        String POST_PARAMS2 = "pression,timey="+time+" valeur="+a+"i ";
-        //+ time
-        //<measurement>,<tag>[,<tags>] <field>[,<field>] <timestamp>
-        //String POST_PARAMS2 = "timey= "+time+", value="+valeur+", 1434055562000000000";
+            String POST_PARAMS2 = "pression,timey="+time+",urine="+1+",frequence=60i valeur="+a+"i";
+            //remarque pour que le prochain s'arrache moins de cheveux,
+            //les différents champs sont séparés par des virgules SAUF le dernier et l'avant dernier...
+
+
         try{
             sendPOST(POST_PARAMS2 , POST_URL2);
         }catch (IOException error) {
@@ -46,6 +47,8 @@ public class Scribe {
 
             // 'http://localhost:8086/query?db=mydb' --data-urlencode 'q=SELECT * FROM "mymeas"'
             //ORDER BY \"time\" DESC LIMIT 10
+
+            //http://localhost:8086/query?db=pressionA&q=SELECT%20*%20FROM%20%22mymeas%22%20ORDER%20BY%20%22time%22%20DESC%20LIMIT%2010
             String POST_PARAMS3 = "q=SELECT * FROM \"pression\" order by time desc limit 1 ";
         try{
             //return sendGet(POST_URL3, POST_PARAMS3);
