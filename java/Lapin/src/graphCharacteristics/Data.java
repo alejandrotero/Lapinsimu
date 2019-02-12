@@ -70,8 +70,8 @@ public class Data {
 					pressionArterielle.add(Double.parseDouble(columnDetail[1]));
 					pressionRespiratiore.add(Double.parseDouble(columnDetail[2]));
 					pressionArterielleMoyenne.add(Double.parseDouble(columnDetail[3]));
-					frequenceCardiaque.add(Double.parseDouble(columnDetail[4]));
-					frequenceRespiratoire.add(Double.parseDouble(columnDetail[5]));
+					frequenceCardiaque.add(Double.parseDouble(columnDetail[5]));
+					frequenceRespiratoire.add(Double.parseDouble(columnDetail[4]));
 				} catch (Exception e) {
 					//System.out.println("line of the fichier txt ignored, not numeric");
 				}

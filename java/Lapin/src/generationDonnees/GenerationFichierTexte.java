@@ -31,7 +31,7 @@ public class GenerationFichierTexte {
 		    Courbe courbeAdrenaline = new Courbe((int) 0.0, valeurInitial);
 			
 		
-		    for (int i = 0; i < 2000; i++) {
+		    for (int i = 0; i < 200000; i++) {
 		    	Double valeurAecrire = courbeAdrenaline.getValeur(i);
 		    	if (valeurAecrire!=null) {
 		    		fw.write (i+"\t");
@@ -111,7 +111,7 @@ void creationFichierTestPA() {
 	
 	public static void main(String[] argv) {
 		GenerationFichierTexte f1 = new GenerationFichierTexte();
-		f1.creationFichierTestPA();
+		f1.creationFichier();
 		
 	}
 
