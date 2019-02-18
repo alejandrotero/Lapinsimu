@@ -3,6 +3,8 @@ import java.io.*;
 
 public class CoupageSequences {
 	
+	// Cette fonction permet de couper un jeu de donnees en differents sets de donnees a chaque '#', soit chaque injection
+	
 	void separationAuxHashtag() {
 		BufferedReader br = null;
 		FileReader fr = null;

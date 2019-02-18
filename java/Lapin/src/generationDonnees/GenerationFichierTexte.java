@@ -17,7 +17,7 @@ public class GenerationFichierTexte {
 		this.evenement=0;
 	}
 	
-	
+	// Cette fonction a permis de creer des fichier texte lisibles par Labchart pour verifier la generation de courbe de Pression arterielle moyenne
 	void creationFichier() {
 		
 		File f = new File ("test.txt");
@@ -51,7 +51,8 @@ public class GenerationFichierTexte {
 		
 		
 	}
-	
+
+// Cette fonction a permis de faire des tests pour creer la courbe de pression arterielle
 void creationFichierTestPA() {
 		
 		File f = new File ("test.txt");
@@ -74,7 +75,7 @@ void creationFichierTestPA() {
 		    for (double i = 0; i < 1000; i+=0.01) {
 		    	
 		    	double valeurAecrire = courbeAdrenaline.getValeur(i);
-		    	valeurAecrire=valeurAecrire+pattern.getY((int)((T1/T2*i)%(pattern.nbPointsParPattern())));
+		    	valeurAecrire=valeurAecrire+pattern.getY((int)((T1/T2*i*100)%(pattern.nbPointsParPattern())));
 		    	
 		    	String iS=(String.valueOf ( i));
 		    	iS=iS.replace('.', ',');
@@ -111,7 +112,7 @@ void creationFichierTestPA() {
 	
 	public static void main(String[] argv) {
 		GenerationFichierTexte f1 = new GenerationFichierTexte();
-		f1.creationFichier();
+		f1.creationFichierTestPA();
 		
 	}
 
