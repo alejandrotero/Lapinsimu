@@ -25,8 +25,8 @@ const influx = new Influx.InfluxDB({
       fields: {
         valeur: Influx.FieldType.INTEGER,
         timey: Influx.FieldType.STRING,
-        frequenceR=Influx.FieldType.INTEGER,
-        urine=Influx.FieldType.INTEGER
+        //frequenceR:Influx.FieldType.INTEGER,
+        //urine:Influx.FieldType.INTEGER
       },
       tags: [
         'host'
@@ -34,6 +34,7 @@ const influx = new Influx.InfluxDB({
     }
   ],
 })
+/*
 const influx2 = new Influx.InfluxDB({
   host: 'localhost',
   database: 'event',
@@ -50,7 +51,7 @@ const influx2 = new Influx.InfluxDB({
     }
   ],
 })
-
+*/
 /*
 database: 'event',
   schema: [
@@ -102,7 +103,7 @@ app.get('/', function (req, res) {
   var query = url.parse(req.url,true);
 
   if  ( query.query['requestType'] == 'getdata' ) {
-
+    console.log(" t ")
 	  setTimeout(function () {
       //read the file of local data, only for testing
       /*
@@ -150,7 +151,7 @@ app.get('/', function (req, res) {
         console.log(debut -new Date().getTime());
         //console.log(row, row.value),
          ///////////////////
-         influx.query(` select valeur timey from pression order by time desc limit 1 `)
+         influx.query(` select * from pression order by time desc limit 1 `)
          .then(rows => {
            rows.forEach(row => {console.log("data: "+row.valeur+","+row.timey),
            res.send({time: row.timey, int : row.valeur})})
@@ -158,13 +159,14 @@ app.get('/', function (req, res) {
            console.log("Promise Rejected: ", err);
        });
         //////////////////////////////
-
+       /*
         influx2.writePoints([
           {
             measurement: 'event',
             fields: { valeur: "isAlived", timey: "0" },
           }
         ]);
+        */
         /*
         console.log("et donc?")
         influx2.query(` select * from event order by time desc limit 1 `)

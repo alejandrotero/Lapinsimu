@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<html>
     <head>
         <meta charset="utf-8">
         <title>Lapin</title>
@@ -16,17 +15,16 @@
 
             }           
         </style>
-
-        <!-- Resources -->
-        
-
+    
     </head>
 
     <body>
         <h5>pression artérielle</h5>
             <div id="chartdiv1"></div>
+            <!-- c'est le bloc qui va contenir le graph, l'ordre d'appel des files Js a son importance, je n'ai pas fait tout les test mais faites attention -->
             <button type="button" onclick="injectionA()">injectionAdrenaline</button> 
 
+            <!-- attention également, comme les bibliotèques sont distantes, ie: sur internet, l'affichage ne marche pas sans connexion-->
             <script type="text/javascript" src="http://get.influxdb.org/influxdb-latest.js"></script>
 
             <script src="https://www.amcharts.com/lib/4/core.js"></script>
@@ -35,18 +33,9 @@
     
             <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
              
-            <script type="text/javascript" src="graph.js"></script>
-
-        
-    <!-- Chart code -->
-    
-        
-    
-    <!-- HTML -->
-    
+            <script type="text/javascript" src="graph.js"></script>    
        
 
     </body>
 
-</html>
 </html>

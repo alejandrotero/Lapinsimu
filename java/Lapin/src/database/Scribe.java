@@ -22,6 +22,8 @@ public class Scribe {
         try{
         URL POST_URL2 = new URL("http", "localhost", 8086, "/write?db="+nomdb);
             int a =  (int) Math.round( valeurAecrire);
+            int u = 0;
+            //if(){} 
             String POST_PARAMS2 = "pression,timey="+time+",urine="+1+",frequence=60i valeur="+a+"i";
             //remarque pour que le prochain s'arrache moins de cheveux,
             //les différents champs sont séparés par des virgules SAUF le dernier et l'avant dernier...
